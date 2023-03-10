@@ -5,7 +5,7 @@ import { fetchAuthAdmin } from '../../store/slices/userSlice'
 import { AppDispatch } from '../../store'
 
 interface userInfoI {
-  login: string,
+  email: string,
   password: string,
 }
 
@@ -13,16 +13,16 @@ export const Login = () => {
   const dispatch = useDispatch<AppDispatch>()
   const navigate = useNavigate()
 
-  const [login, setLogin] = useState('')
+  const [email, setEmail] = useState('')
   const handlerOnChangeLogin = (e) => {
-    setLogin(prev => e.target.value)
+    setEmail(prev => e.target.value)
   }
   const [password, setPassword] = useState('')
   const handlerOnChangePassword = (e) => {
     setPassword(prev => e.target.value)
   }
 
-  const userInfo: userInfoI = {login, password}
+  const userInfo: userInfoI = {email, password}
 
   const onSubmit = (event: any) => {
     event.preventDefault()
@@ -34,7 +34,7 @@ export const Login = () => {
       <form method='post' onSubmit={onSubmit}>
         <label>
           E-mail
-          <input type="login" required value={login} onChange={handlerOnChangeLogin} />
+          <input type="login" required value={email} onChange={handlerOnChangeLogin} />
         </label>
         <label>
           Password

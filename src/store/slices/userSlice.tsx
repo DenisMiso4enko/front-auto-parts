@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
-//login: adminAvda@gmail.com
+//email: adminAvda@gmail.com
 //pass: fff400420757
 
 export const fetchAuthAdmin = createAsyncThunk(
@@ -44,12 +44,12 @@ const userSlice = createSlice({
   extraReducers: {
     //@ts-ignore
     [fetchAuthAdmin.pending]: (state) => {
-      state.status = 'loading',
+      state.status = 'loading'
       state.error = null
     },
     //@ts-ignore
     [fetchAuthAdmin.fulfilled]: (state, action) => {
-      state.status = 'resolved',
+      state.status = 'resolved'
       state.login = action.payload
     },
     //@ts-ignore
