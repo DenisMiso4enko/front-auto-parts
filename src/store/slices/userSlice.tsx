@@ -44,14 +44,11 @@ export const fetchGetMe = createAsyncThunk(
         }
       );
       const data = await response.json();
-      // console.log("response", data);
-      console.log(typeof data);
-      //response !== null
+
       if (data) {
-        //! const data = await response.json()
-        // const { userId } = data;
+        const { _id } = data;
         console.log(data);
-        // dispatch(authAdmin(userId));
+        dispatch(authAdmin(_id));
         console.log("access OK");
       } else {
         console.log("тут должен быть запрос на refresh");
