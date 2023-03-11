@@ -5,34 +5,77 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
 export const fetchAuthAdmin = createAsyncThunk(
   'user/fetchAuthAdmin',
-  async function (action: any) {
+  async function (action: any, { dispatch }) {
     const { userInfo, navigate } = action
-    const data: Response = await fetch('http://localhost:8888/admin/auth',{
+    const response: Response = await fetch('http://localhost:8888/admin/auth',{
         method: 'POST',
         headers: {
             'Content-Type': 'application/json;charset=utf-8',
         },
         body: JSON.stringify(userInfo),
     })
-    if (data.status === 200) {
-        const jwt = await data.json()
-        const { accessToken, refreshToken } = jwt
+    if (response.ok) {
+        const data = await response.json()
+        const { accessToken, refreshToken, userId } = data
         localStorage.setItem('jwtAccess', accessToken)
         localStorage.setItem('jwtRefresh', refreshToken)
-        // await fetchGetUserInfo()
+        dispatch(authAdmin(userId))
         navigate('/admin/dashboard')
+        alert('Добро пожаловать!')
     } else {
         alert(`This "${userInfo.email}" is not registered.`)
     }
-    console.log('BINGO!')
+  }
+)
+
+export const fetchGetMe = createAsyncThunk(
+  'user/fetchGetMe',
+  async function (_, { dispatch }) {
+    const token = localStorage.getItem('jwtAccess')
+    if (token !== 'undefined') {
+        const response: Response = await fetch('http://localhost:8888/admin/verify', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8',
+            },
+            body: JSON.stringify({ token }),
+        })
+        if (response !== null) {
+          //! const data = await response.json()
+          //! const { userId } = data
+          //! console.log(userId)
+          //! dispatch(authAdmin(userId))
+          console.log('access OK')
+
+        } else {
+          const refresh = localStorage.getItem('jwtRefresh')
+          if (refresh !== 'undefined') {
+            const newToken: Response = await fetch('http://localhost:8888/admin/refreshToken', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json;charset=utf-8',
+                },
+                body: JSON.stringify({ refresh }),
+            })
+            const data = await newToken.json()
+            const { accessToken, refreshToken, userId } = data
+            localStorage.setItem('jwtAccess', accessToken)
+            localStorage.setItem('jwtRefresh', refreshToken)
+            dispatch(authAdmin(userId))
+            alert('refresh OK')
+          }
+          alert('Попробуйте авторизоваться снова!!!')
+        }
+    } else {
+      alert('Попробуйте авторизоваться снова!')
+    }
   }
 )
 
 const userSlice = createSlice({
   name: 'user',
   initialState: {
-    login: 'adminAdmin',
-    pass: '',
+    login: 'Admin',
     status: null,
     error: null,
   },
@@ -41,19 +84,25 @@ const userSlice = createSlice({
       state.login = action.payload
     }
   },
-  extraReducers: {
-    //@ts-ignore
-    [fetchAuthAdmin.pending]: (state) => {
+  extraReducers: (builder) => {
+    builder.addCase(fetchAuthAdmin.pending, (state) => {
       state.status = 'loading'
       state.error = null
-    },
-    //@ts-ignore
-    [fetchAuthAdmin.fulfilled]: (state, action) => {
+    })
+    builder.addCase(fetchAuthAdmin.fulfilled, (state) => {
       state.status = 'resolved'
-      state.login = action.payload
-    },
-    //@ts-ignore
-    [fetchAuthAdmin.rejected]: (state, action) => {},
+    })
+    builder.addCase(fetchGetMe.pending, (state) => {
+      state.status = 'loading'
+      state.error = null
+    })
+    builder.addCase(fetchGetMe.fulfilled, (state) => {
+      state.status = 'resolved'
+    })
+    builder.addCase(fetchGetMe.rejected, (state) => {
+      state.status = 'reject'
+      state.error = 'error'
+    })
   },
 })
 

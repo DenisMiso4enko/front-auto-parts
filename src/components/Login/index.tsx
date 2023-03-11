@@ -34,7 +34,7 @@ export const Login = () => {
       <form method='post' onSubmit={onSubmit}>
         <label>
           E-mail
-          <input type="login" required value={email} onChange={handlerOnChangeLogin} />
+          <input type="email" required value={email} onChange={handlerOnChangeLogin} />
         </label>
         <label>
           Password
