@@ -40,7 +40,7 @@ export const Login = () => {
           Password
           <input type="password" required value={password} onChange={handlerOnChangePassword} />
         </label>
-        <button type="submit">SUBMIT</button>
+        <button type="submit">Войти</button>
       </form>
     </div>
   )

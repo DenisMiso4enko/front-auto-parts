@@ -65,6 +65,7 @@ export const fetchGetMe = createAsyncThunk(
             }
           );
           const data = await newToken.json();
+          console.log(data, 'refresh data')
           const { accessToken, refreshToken, userId } = data;
           localStorage.setItem("jwtAccess", accessToken);
           localStorage.setItem("jwtRefresh", refreshToken);
@@ -83,7 +84,7 @@ export const fetchGetMe = createAsyncThunk(
 const userSlice = createSlice({
   name: "user",
   initialState: {
-    login: "Admin",
+    login: "",
     status: null,
     error: null,
   },
