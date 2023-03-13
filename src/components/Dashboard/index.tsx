@@ -8,7 +8,7 @@ import { fetchGetMe } from '../../store/slices/userSlice'
 export const Dashboard = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch<AppDispatch>()
-  const { login } = useSelector((state: RootState) => state.user)
+  const { userId } = useSelector((state: RootState) => state.user)
 
   const handlerOnClick = () => {
     navigate('/admin/dashboard/create-post')
@@ -18,12 +18,12 @@ export const Dashboard = () => {
     dispatch(fetchGetMe())
   }, [])
 
-  if (!login) return <h1>Авторизуйтесь!</h1>
+  if (!userId) return <h1>Авторизуйтесь!</h1>
 
   return (
     <>
       <h2>Dashboard</h2>
-      <p>{login}</p>
+      <p>{userId}</p>
       <button onClick={handlerOnClick}>Добавить обьявление</button>
     </>
   )

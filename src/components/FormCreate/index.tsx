@@ -1,15 +1,22 @@
-import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
-import { RootState } from "../../store";
 import axios from "axios";
+import { AppDispatch, RootState } from "../../store";
+import { fetchGetMe } from "../../store/slices/userSlice";
+import { PATHDOMAIN } from "../../constants";
 import "./FormCreate.scss";
-import { useState } from "react";
 
 export function FormCreate() {
-  // const { login } = useSelector((state: RootState) => state.user);
+  const dispatch = useDispatch<AppDispatch>()
+    useEffect(() => {
+    dispatch(fetchGetMe())
+  }, [])
+
+  const { userId } = useSelector((state: RootState) => state.user);
   const [images, setImages] = useState([]);
 
   const handleChangeFile = async (e) => {
@@ -20,12 +27,12 @@ export function FormCreate() {
         formData.append("image", files[file]);
       }
       const { data } = await axios.post(
-        "http://localhost:8888/upload",
+        `${PATHDOMAIN}upload`,
         formData
       );
       setImages(data);
     } catch (e) {
-      alert("ошиюка при загрузка файла");
+      alert("Ошибка при загрузка файла");
     }
   };
 
@@ -51,11 +58,11 @@ export function FormCreate() {
       state: event.target[16].value,
     };
     const { data } = await axios.post(
-      "http://localhost:8888/admin/createProduct",
+      `${PATHDOMAIN}admin/createProduct`,
       formInfo
     );
   };
-  // if (!login) return <h1>Авторизуйтесь!</h1>;
+  if (!userId) return <h1>Авторизуйтесь!</h1>;
   return (
     <div className="form-wrapper">
       <Form onSubmit={handlerOnCreatePost}>

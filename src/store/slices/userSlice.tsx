@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { PATHDOMAIN } from "../../constants";
 
 //email: adminAvda@gmail.com
 //pass: fff400420757
@@ -7,7 +8,7 @@ export const fetchAuthAdmin = createAsyncThunk(
   "user/fetchAuthAdmin",
   async function (action: any, { dispatch }) {
     const { userInfo, navigate } = action;
-    const response: Response = await fetch("http://localhost:8888/admin/auth", {
+    const response: Response = await fetch(`${PATHDOMAIN}admin/auth`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json;charset=utf-8",
@@ -34,7 +35,7 @@ export const fetchGetMe = createAsyncThunk(
     const token = localStorage.getItem("jwtAccess");
     if (token !== "undefined") {
       const response: Response = await fetch(
-        "http://localhost:8888/admin/verify",
+        `${PATHDOMAIN}admin/verify`,
         {
           method: "POST",
           headers: {
@@ -47,15 +48,12 @@ export const fetchGetMe = createAsyncThunk(
 
       if (data) {
         const { _id } = data;
-        console.log(data);
         dispatch(authAdmin(_id));
-        console.log("access OK");
       } else {
-        console.log("тут должен быть запрос на refresh");
         const refresh_token = localStorage.getItem("jwtRefresh");
         if (refresh_token !== "undefined") {
           const newToken: Response = await fetch(
-            "http://localhost:8888/admin/refreshToken",
+            `${PATHDOMAIN}admin/refreshToken`,
             {
               method: "POST",
               headers: {
@@ -65,12 +63,10 @@ export const fetchGetMe = createAsyncThunk(
             }
           );
           const data = await newToken.json();
-          console.log(data, 'refresh data')
           const { accessToken, refreshToken, userId } = data;
           localStorage.setItem("jwtAccess", accessToken);
           localStorage.setItem("jwtRefresh", refreshToken);
           dispatch(authAdmin(userId));
-          alert("refresh OK");
         } else {
           alert("Попробуйте авторизоваться снова!!!");
         }
@@ -84,13 +80,13 @@ export const fetchGetMe = createAsyncThunk(
 const userSlice = createSlice({
   name: "user",
   initialState: {
-    login: "",
+    userId: "",
     status: null,
     error: null,
   },
   reducers: {
     authAdmin(state, action) {
-      state.login = action.payload;
+      state.userId = action.payload;
     },
   },
   extraReducers: (builder) => {
