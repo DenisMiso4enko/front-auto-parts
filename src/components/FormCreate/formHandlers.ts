@@ -1,4 +1,5 @@
 import axios from "axios";
+import { httpRequest } from "../../httpRequests";
 
 export const onChangeInputFile = (path: string, setState: any) => {
   return async (e) => {
@@ -8,16 +9,13 @@ export const onChangeInputFile = (path: string, setState: any) => {
       for (const file in files) {
         formData.append("image", files[file]);
       }
-      const { data } = await axios.post(
-        path,
-        formData
-      );
+      const { data } = await axios.post(path, formData);
       setState(data);
     } catch (e) {
       alert("Ошибка при загрузке файла");
     }
   };
-}
+};
 
 export const onSubmitForm = (state, path) => {
   return async (event: any) => {
@@ -41,9 +39,6 @@ export const onSubmitForm = (state, path) => {
       currency: event.target[15].value,
       state: event.target[16].value,
     };
-    const { data } = await axios.post(
-      path,
-      formInfo
-    );
-    console.log(data)
-}}
+    const request = await httpRequest(path, "POST", formInfo);
+  };
+};

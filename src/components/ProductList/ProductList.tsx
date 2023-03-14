@@ -2,7 +2,6 @@ import React from "react";
 import ProductListItem from "../ProductListItem/ProductListItem";
 
 const ProductList = ({ products }) => {
-  console.log(products);
   return (
     <div className="product__list">
       {products &&

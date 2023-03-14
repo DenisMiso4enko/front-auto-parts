@@ -5,8 +5,9 @@ import { useNavigate } from "react-router-dom";
 import { AppDispatch, RootState } from "../../store";
 import { fetchGetMe } from "../../store/slices/userSlice";
 import { fetchGetProducts } from "../../store/slices/productSlice";
-import ProductListItem from "../ProductListItem/ProductListItem";
 import ProductList from "../ProductList/ProductList";
+import "./index.scss";
+import FormSearch from "../FormSearch/FormSearch";
 
 export const Dashboard = () => {
   const navigate = useNavigate();
@@ -26,12 +27,22 @@ export const Dashboard = () => {
   if (!userId) return <h1>Авторизуйтесь!</h1>;
 
   return (
-    <>
-      <h2>Dashboard</h2>
-      <p>{userId}</p>
-      <button onClick={handlerOnClick}>Создать обьявление</button>
+    <div className="dashboard-container">
+      <div className="dashboard">
+        <h2 className="dashboard__title">Панель администратора</h2>
+        <FormSearch />
+        <div className="dashboard__head">
+          <h3>Товары</h3>
+          <div className="dashboard__actions">
+            <p>Всего: {products.length}</p>
+            <button onClick={handlerOnClick}>Создать обьявление</button>
+          </div>
+        </div>
 
-      {products && <ProductList products={products} />}
-    </>
+        <p>{userId}</p>
+
+        {products && <ProductList products={products} />}
+      </div>
+    </div>
   );
 };
