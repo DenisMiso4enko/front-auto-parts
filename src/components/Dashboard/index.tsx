@@ -23,9 +23,8 @@ export const Dashboard = () => {
   return (
     <>
       <h2>Dashboard</h2>
-      <p>test git!!!!!!</p>
       <p>{userId}</p>
-      <button onClick={handlerOnClick}>Добавить обьявление</button>
+      <button onClick={handlerOnClick}>Создать обьявление</button>
     </>
   )
 }
