@@ -5,6 +5,7 @@ import { Login } from "./components/Login";
 import { Dashboard } from "./pages/Dashboard";
 import { FormCreate } from "./components/FormCreate";
 import "./App.css";
+import FullProductAdmin from "./pages/FullProductAdmin/FullProductAdmin";
 
 export default function App() {
   return (
@@ -15,6 +16,7 @@ export default function App() {
             <Route index element={<MainPage />} />
             <Route path="/admin" element={<Login />} />
             <Route path="/admin/dashboard" element={<Dashboard />} />
+            <Route path="/admin/getOne/:id" element={<FullProductAdmin />} />
             <Route
               path="/admin/dashboard/create-post"
               element={<FormCreate />}

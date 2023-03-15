@@ -87,7 +87,10 @@ export const Dashboard = () => {
             {products.map((el: IProduct, i) => (
               <tr key={el._id}>
                 <td>{i + 1}</td>
-                <td>
+                <td
+                  onClick={() => navigate(`/admin/getOne/${el._id}`)}
+                  style={{ cursor: "pointer" }}
+                >
                   {el.mark} {el.model} <br />
                   {el.product}
                 </td>
