@@ -2,6 +2,7 @@ export interface ProductInitialState {
   products: any;
   loading: boolean;
   errors: any;
+  totalPages: number;
 }
 
 export interface IProduct {

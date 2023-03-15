@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -14,12 +14,17 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./index.scss";
 import { httpRequest } from "../../httpRequests";
 import { PATHDOMAIN } from "../../constants";
+import { Pagination } from "@mui/material";
 
 export const Dashboard = () => {
+  const [page, setPage] = useState(1);
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const { userId } = useSelector((state: RootState) => state.user);
-  const { products } = useSelector((state: RootState) => state.products);
+  const { products, totalPages } = useSelector(
+    (state: RootState) => state.products
+  );
+  console.log(totalPages);
 
   const handlerOnClick = () => {
     navigate("/admin/dashboard/create-post");
@@ -31,7 +36,7 @@ export const Dashboard = () => {
         "DELETE",
         { id }
       );
-      dispatch(fetchGetProducts());
+      dispatch(fetchGetProducts(page));
     } catch (e) {
       console.log(e.message);
     }
@@ -39,8 +44,8 @@ export const Dashboard = () => {
 
   useEffect(() => {
     dispatch(fetchGetMe());
-    dispatch(fetchGetProducts());
-  }, []);
+    dispatch(fetchGetProducts(page));
+  }, [page]);
 
   if (!userId) return <h1>Авторизуйтесь!</h1>;
 
@@ -57,6 +62,10 @@ export const Dashboard = () => {
     { dataField: "Дата", text: "Дата" },
     { dataField: "Действия", text: "Действия" },
   ];
+
+  const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
+    dispatch(setPage(value));
+  };
 
   return (
     <div className="dashboard-container">
@@ -115,6 +124,10 @@ export const Dashboard = () => {
             ))}
           </tbody>
         </Table>
+
+        <div className="pagination">
+          <Pagination count={totalPages} page={page} onChange={handleChange} />
+        </div>
       </div>
     </div>
   );
