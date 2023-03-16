@@ -19,7 +19,9 @@ export const Dashboard = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const { userId } = useSelector((state: RootState) => state.user);
-  const { products } = useSelector((state: RootState) => state.products);
+  const { products, searchValue } = useSelector(
+    (state: RootState) => state.products
+  );
 
   const handlerOnClick = () => {
     navigate("/admin/dashboard/create-post");
@@ -40,7 +42,7 @@ export const Dashboard = () => {
   useEffect(() => {
     dispatch(fetchGetMe());
     dispatch(fetchGetProducts());
-  }, []);
+  }, [searchValue]);
 
   if (!userId) return <h1>Авторизуйтесь!</h1>;
 

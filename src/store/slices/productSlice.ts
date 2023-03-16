@@ -6,6 +6,7 @@ import { authAdmin } from "./userSlice";
 import { ProductInitialState } from "../../types/productTypes";
 
 const initialState: ProductInitialState = {
+  searchValue: "",
   products: [],
   loading: false,
   errors: "",
@@ -21,7 +22,6 @@ export const fetchGetProducts = createAsyncThunk(
       );
       const data = await response.json();
       return data;
-      // console.log("get posts", data);
     } catch (e) {
       console.log(e.message());
     }
@@ -31,7 +31,11 @@ export const fetchGetProducts = createAsyncThunk(
 export const productSlice = createSlice({
   name: "counter",
   initialState: initialState,
-  reducers: {},
+  reducers: {
+    setSearchValue(state, action) {
+      state.searchValue = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchGetProducts.pending, (state, action) => {
       state.loading = true;
@@ -50,6 +54,6 @@ export const productSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const {} = productSlice.actions;
+export const { setSearchValue } = productSlice.actions;
 
 export default productSlice.reducer;

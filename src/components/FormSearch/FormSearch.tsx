@@ -1,70 +1,32 @@
 import React, { useState } from "react";
 import "./index.scss";
 import { PATHDOMAIN } from "../../constants";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../store";
+import { setSearchValue } from "../../store/slices/productSlice";
 
 const FormSearch = () => {
-  const [category, setCategory] = useState("");
-  const [model, setModel] = useState("");
-  const [year, setYear] = useState("");
-  const [search, setSearch] = useState("");
-
+  const { searchValue } = useSelector((state: RootState) => state.products);
+  const dispatch = useDispatch<AppDispatch>();
   const handlerSubmit = async (e) => {
     e.preventDefault();
 
-    const req = await fetch(
-      `${PATHDOMAIN}admin/search?search=${search}&category=${category}&model=${model}&year=${year}`
-    );
-    setSearch("");
-    setYear("");
-    setModel("");
-    setCategory("");
+    // const req = await fetch(`${PATHDOMAIN}admin/search?search=${search}`);
+  };
+  const handlerChange = (e) => {
+    dispatch(setSearchValue(e.target.value));
   };
 
   return (
-    <form className="form-search" onSubmit={handlerSubmit}>
+    <form className="form-search">
       <div>
         <input
           className="search-input"
           type="text"
-          placeholder="Поиск..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
+          placeholder="Поиск по артикулу..."
+          value={searchValue}
+          onChange={handlerChange}
         />
-      </div>
-      <div className="form-search__options">
-        <select
-          name="category"
-          id="category"
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
-        >
-          <option value="блок управения">Блок управления</option>
-          <option value="крыша">Крыша</option>
-          <option value="Крыло">Крыло</option>
-        </select>
-
-        <select
-          name="model"
-          id="model"
-          value={model}
-          onChange={(e) => setModel(e.target.value)}
-        >
-          <option value="Opel">Opel</option>
-          <option value="Audi">Audi</option>
-          <option value="Iveco">Iveco</option>
-          <option value="x6">x6</option>
-        </select>
-
-        <select
-          name="year"
-          id="year"
-          value={year}
-          onChange={(e) => setYear(e.target.value)}
-        >
-          <option value="1999">1999</option>
-          <option value="2000">2000</option>
-          <option value="2001">2001</option>
-        </select>
       </div>
     </form>
   );

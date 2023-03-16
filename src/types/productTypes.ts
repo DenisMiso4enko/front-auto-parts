@@ -2,6 +2,7 @@ export interface ProductInitialState {
   products: any;
   loading: boolean;
   errors: any;
+  searchValue: string;
 }
 
 export interface IProduct {
