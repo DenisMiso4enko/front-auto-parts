@@ -21,10 +21,8 @@ export const fetchGetProducts = createAsyncThunk(
         "GET"
       );
       const data = await response.json();
-      console.log(data);
       dispatch(setTotalPages(data.totalPages));
-      return data.results;
-      // console.log("get posts", data);
+      dispatch(setProducts(data.results))
     } catch (e) {
       console.log(e.message());
     }
@@ -38,6 +36,9 @@ export const productSlice = createSlice({
     setTotalPages(state, action) {
       state.totalPages = action.payload;
     },
+    setProducts(state, action) {
+      state.products = action.payload;
+    }
   },
   extraReducers: (builder) => {
     builder.addCase(fetchGetProducts.pending, (state, action) => {
@@ -50,13 +51,14 @@ export const productSlice = createSlice({
       }),
       builder.addCase(fetchGetProducts.fulfilled, (state, action) => {
         state.loading = false;
-        state.products = action.payload;
         state.errors = "";
       });
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { setTotalPages } = productSlice.actions;
+export const { setTotalPages, setProducts } = productSlice.actions;
 
 export default productSlice.reducer;
+
+
