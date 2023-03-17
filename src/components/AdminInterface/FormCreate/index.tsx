@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
@@ -9,9 +10,10 @@ import { fetchGetMe } from "../../../store/slices/userSlice";
 import { PATHDOMAIN } from "../../../constants";
 import { onChangeInputFile, onSubmitForm } from "./formHandlers";
 import { formFields } from "./formFields";
-import "./FormCreate.scss";
+import "./index.scss";
 
 export function FormCreate() {
+  const navigate = useNavigate()
   const dispatch = useDispatch<AppDispatch>()
     useEffect(() => {
     dispatch(fetchGetMe())
@@ -23,12 +25,13 @@ export function FormCreate() {
   //onChangeInputFile(path: string, setState)
   const handleChangeFile = onChangeInputFile(`${PATHDOMAIN}upload`, setImages)
   // onSubmitForm(state, path: string)
-  const handlerOnCreatePost = onSubmitForm(images, `${PATHDOMAIN}admin/createProduct`)
+  const handlerOnCreatePost = onSubmitForm(images, `${PATHDOMAIN}admin/createProduct`, navigate)
 
   if (!userId) return <h1>Авторизуйтесь!</h1>;
   return (
     <div className="form-wrapper">
-      <Form onSubmit={handlerOnCreatePost}>
+      <h2>Создание нового обьявления</h2>
+      <Form className='form-create' onSubmit={handlerOnCreatePost}>
         {formFields.map(input => {
           if (input.type === 'text') {
             return (
@@ -36,7 +39,7 @@ export function FormCreate() {
                 key={input.label}
                 as={Row}
                 className="mb-6 custom-group"
-                controlId="formCreate"
+                // controlId="formCreate"
               >
                 <Form.Label column sm={2}>
                   {input.label}
@@ -56,7 +59,7 @@ export function FormCreate() {
                 key={input.label}
                 as={Row}
                 className="mb-3 custom-group"
-                controlId="formCreate"
+                // controlId="formCreate"
               >
                 <Form.Label htmlFor="typeDescription" column sm={2}>
                   {input.label}
@@ -77,7 +80,7 @@ export function FormCreate() {
                 key={input.label}
                 as={Row}
                 className="mb-3 custom-group"
-                controlId="formCreate"
+                // controlId="formCreate"
               >
                 <Form.Label column sm={2}>
                   {input.label}
@@ -98,7 +101,7 @@ export function FormCreate() {
                 key={input.label}
                 as={Row}
                 className="mb-3 custom-group"
-                controlId="formCreate"
+                // controlId="formCreate"
               >
                 <Form.Label column sm={2}>
                   {input.label}
@@ -124,6 +127,7 @@ export function FormCreate() {
                 <Col sm={10}>
                   {input.value.map(i => (
                     <Form.Check
+                      inline
                       key={i}
                       type="radio"
                       label={i}

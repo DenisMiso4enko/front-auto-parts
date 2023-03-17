@@ -1,9 +1,7 @@
-import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { AppDispatch, RootState } from "../../../store";
-import { fetchGetMe } from "../../../store/slices/userSlice";
 import { fetchGetProducts } from "../../../store/slices/productSlice";
 import FormSearch from "../../../components/AdminInterface/FormSearch/FormSearch";
 import { Table } from "react-bootstrap";
@@ -37,11 +35,6 @@ export const Panel = () => {
       alert(e.message);
     }
   };
-
-  useEffect(() => {
-    dispatch(fetchGetMe());
-    dispatch(fetchGetProducts(currentPage));
-  }, [currentPage]);
 
   return (
     <>

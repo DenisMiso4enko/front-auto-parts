@@ -3,20 +3,19 @@ export const formFields = [
     type: 'text',
     label: 'Марка*',
     placeholder: 'Введите марку авто',
-    required: true,
-
+    required: true
   },
   {
     type: 'text',
     label: 'Модель*',
     placeholder: 'Введите модель авто',
-    required: true,
+    required: true
   },
   {
     type: 'text',
     label: 'Год выпуска*',
     placeholder: 'Введите год выпуска авто',
-    required: true,
+    required: true
   },
   {
     type: 'text',
@@ -58,7 +57,13 @@ export const formFields = [
     type: 'text',
     label: 'Запчасть*',
     placeholder: 'Введите название запчасти',
-    required: true,
+    required: true
+  },
+  {
+    type: 'select',
+    label: 'Состояние*',
+    text: 'Информация о состоянии запчасти',
+    option: ['Новое', 'Б/У'],
   },
   {
     type: 'file',
@@ -82,6 +87,7 @@ export const formFields = [
     type: 'textarea',
     label: 'Описание',
     placeholder: 'Напишите описание запчасти',
+    required: false,
   },
   {
     type: 'text',
