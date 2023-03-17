@@ -1,0 +1,25 @@
+.dashboard-container {
+  flex-grow: 1;
+
+  padding: 0 20px;
+}
+
+.dashboard {
+  width: 100%;
+
+  &__title {
+    margin-bottom: 40px;
+  }
+
+  &__head {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 0;
+  }
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+}
+
