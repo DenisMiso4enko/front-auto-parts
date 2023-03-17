@@ -1,5 +1,5 @@
 import axios from "axios";
-import { httpRequest } from "../../httpRequests";
+import { httpRequest } from "../../../httpRequests";
 
 export const onChangeInputFile = (path: string, setState: any) => {
   return async (e) => {

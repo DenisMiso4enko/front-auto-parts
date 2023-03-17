@@ -1,9 +1,9 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Layout } from "./components/Layout";
 import { MainPage } from "./pages/MainPage";
-import { Login } from "./components/Login";
+import { Login } from "./components/AdminInterface/Login";
 import { Dashboard } from "./pages/Dashboard";
-import { FormCreate } from "./components/FormCreate";
+import { FormCreate } from "./components/AdminInterface/FormCreate";
 import "./App.css";
 
 export default function App() {

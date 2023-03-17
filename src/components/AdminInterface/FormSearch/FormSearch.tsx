@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./index.scss";
-import { PATHDOMAIN } from "../../constants";
+import { PATHDOMAIN } from "../../../constants";
 
 const FormSearch = () => {
   const [category, setCategory] = useState("");
