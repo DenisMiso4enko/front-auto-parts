@@ -71,4 +71,4 @@ export const { setTotalPages, setProducts, setCurrentPage, setTotalProducts } =
   productSlice.actions;
 
 export default productSlice.reducer;
-// fuck you
+// fuck off
