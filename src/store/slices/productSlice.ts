@@ -4,7 +4,7 @@ import { httpRequest } from "../../httpRequests";
 import { PATHDOMAIN } from "../../constants";
 import { authAdmin } from "./userSlice";
 import { ProductInitialState } from "../../types/productTypes";
-
+// denekimoff
 const initialState: ProductInitialState = {
   products: [],
   loading: false,
