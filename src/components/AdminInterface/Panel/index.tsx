@@ -1,75 +1,52 @@
-import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { AppDispatch, RootState } from "../../store";
-import { fetchGetMe } from "../../store/slices/userSlice";
-import { fetchGetProducts } from "../../store/slices/productSlice";
-import FormSearch from "../../components/AdminInterface/FormSearch/FormSearch";
+import { AppDispatch, RootState } from "../../../store";
+import { fetchGetProducts } from "../../../store/slices/productSlice";
+import FormSearch from "../../../components/AdminInterface/FormSearch/FormSearch";
 import { Table } from "react-bootstrap";
-import { IProduct } from "../../types/productTypes";
+import { IProduct } from "../../../types/productTypes";
 import { FaRegEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
+import { httpRequest } from "../../../httpRequests";
+import { PATHDOMAIN } from "../../../constants";
+import { columns } from './dataTableColumns';
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./index.scss";
-import { httpRequest } from "../../httpRequests";
-import { PATHDOMAIN } from "../../constants";
 
-export const Dashboard = () => {
+export const Panel = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
+  const { products, currentPage, totalProducts } = useSelector((state: RootState) => state.products);
   const { userId } = useSelector((state: RootState) => state.user);
-  const { products } = useSelector((state: RootState) => state.products);
 
-  const handlerOnClick = () => {
+  const handlerCreateProduct = () => {
     navigate("/admin/dashboard/create-post");
   };
-  const handleDeleteProduct = async (id) => {
+
+  const handleDeleteProduct = async (id: string) => {
     try {
       const res = await httpRequest(
         `${PATHDOMAIN}admin/deleteProduct`,
         "DELETE",
         { id }
       );
-      dispatch(fetchGetProducts());
+      dispatch(fetchGetProducts(currentPage));
     } catch (e) {
-      console.log(e.message);
+      alert(e.message);
     }
   };
 
-  useEffect(() => {
-    dispatch(fetchGetMe());
-    dispatch(fetchGetProducts());
-  }, []);
-
-  if (!userId) return <h1>Авторизуйтесь!</h1>;
-
-  const columns = [
-    { dataField: "#", text: "#" },
-    { dataField: "Марка и Модель", text: "Марка и Модель" },
-    {
-      dataField: "Описание, номер з/ч, склад.инфо ",
-      text: "Описание, номер з/ч, склад.инфо ",
-    },
-    { dataField: "артикул", text: "артикул" },
-    { dataField: "г.в", text: "г.в" },
-    { dataField: "Цена", text: "Цена" },
-    { dataField: "Дата", text: "Дата" },
-    { dataField: "Действия", text: "Действия" },
-  ];
-
   return (
-    <div className="dashboard-container">
-      <div className="dashboard">
-        <h2 className="dashboard__title">
+    <>
+      <h2 className="dashboard__title">
           Панель администратора <span>{userId}</span>
         </h2>
         <FormSearch />
         <div className="dashboard__head">
           <h3>Товары</h3>
           <div className="dashboard__actions">
-            <span>Всего: {products.length}</span>
-            <button className="btn btn-success" onClick={handlerOnClick}>
+            <span>Всего: {totalProducts}</span>
+            <button className="btn btn-success" onClick={handlerCreateProduct}>
               Создать обьявление
             </button>
           </div>
@@ -84,7 +61,7 @@ export const Dashboard = () => {
             </tr>
           </thead>
           <tbody>
-            {products.map((el: IProduct, i) => (
+            {products.map((el: IProduct, i: number) => (
               <tr key={el._id}>
                 <td>{i + 1}</td>
                 <td>
@@ -98,6 +75,7 @@ export const Dashboard = () => {
                   {el.price} {el.currency}
                 </td>
                 <td>{el.createdAt}</td>
+                <td>{el.views}</td>
                 <td>
                   <div className="tb-actions">
                     <button className="btn">
@@ -115,7 +93,6 @@ export const Dashboard = () => {
             ))}
           </tbody>
         </Table>
-      </div>
-    </div>
-  );
-};
+    </>
+  )
+}

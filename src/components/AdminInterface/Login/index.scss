@@ -1,0 +1,25 @@
+.from-title {
+  margin-bottom: 60px;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.form-login {
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+
+  &__label {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+}
