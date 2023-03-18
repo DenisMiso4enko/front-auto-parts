@@ -1,5 +1,5 @@
 import axios from "axios";
-import { httpRequest } from "../../httpRequests";
+import { httpRequest } from "../../../httpRequests";
 
 export const onChangeInputFile = (path: string, setState: any) => {
   return async (e) => {
@@ -17,9 +17,15 @@ export const onChangeInputFile = (path: string, setState: any) => {
   };
 };
 
-export const onSubmitForm = (state, path) => {
+export const onSubmitForm = (state: any, path: string, nav: any) => {
   return async (event: any) => {
     event.preventDefault();
+
+    const checkRadio = (event) => {
+      const checkedElement = [event.target[16], event.target[17], event.target[18]].filter(el => el.checked)
+      if (checkedElement) return checkedElement[0].value
+      return 'BYN'
+    }
     const formInfo = {
       mark: event.target[0].value,
       model: event.target[1].value,
@@ -31,14 +37,15 @@ export const onSubmitForm = (state, path) => {
       bodeType: event.target[7].value,
       box: event.target[8].value,
       product: event.target[9].value,
+      state: event.target[10].value,
       imagesUrl: state,
-      article: event.target[11].value,
-      numberOfProduct: event.target[12].value,
-      description: event.target[13].value,
-      price: event.target[14].value,
-      currency: event.target[15].value,
-      state: event.target[16].value,
+      article: event.target[12].value,
+      numberOfProduct: event.target[13].value,
+      description: event.target[14].value,
+      price: event.target[15].value,
+      currency: checkRadio(event),
     };
-    const request = await httpRequest(path, "POST", formInfo);
-  };
+    const responce = await httpRequest(path, "POST", formInfo);
+    if (responce.ok) nav("/admin/dashboard")
+    };
 };

@@ -1,6 +1,9 @@
 .header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   background-color: var(--purple-color);
   color: white;
-  padding: 20px;
-  margin-bottom: 70px;
+  padding: 1rem 2rem;
+  margin-bottom: 1rem;
 }
