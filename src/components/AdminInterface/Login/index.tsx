@@ -1,47 +1,63 @@
-import { useState } from 'react'
-import { useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
-import { fetchAuthAdmin } from '../../../store/slices/userSlice'
-import { AppDispatch } from '../../../store'
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { fetchAuthAdmin } from "../../../store/slices/userSlice";
+import { AppDispatch } from "../../../store";
+import "./index.scss";
 
 interface userInfoI {
-  email: string,
-  password: string,
+  email: string;
+  password: string;
 }
 
 export const Login = () => {
-  const dispatch = useDispatch<AppDispatch>()
-  const navigate = useNavigate()
+  const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
 
-  const [email, setEmail] = useState('')
+  const [email, setEmail] = useState("");
   const handlerOnChangeLogin = (e) => {
-    setEmail(prev => e.target.value)
-  }
-  const [password, setPassword] = useState('')
+    setEmail((prev) => e.target.value);
+  };
+  const [password, setPassword] = useState("");
   const handlerOnChangePassword = (e) => {
-    setPassword(prev => e.target.value)
-  }
+    setPassword((prev) => e.target.value);
+  };
 
-  const userInfo: userInfoI = {email, password}
+  const userInfo: userInfoI = { email, password };
 
   const onSubmit = (event: any) => {
-    event.preventDefault()
-    dispatch(fetchAuthAdmin({userInfo, navigate}))
-  }
+    event.preventDefault();
+    dispatch(fetchAuthAdmin({ userInfo, navigate }));
+  };
 
   return (
-    <div>
-      <form method='post' onSubmit={onSubmit}>
-        <label>
+    <div className="dashboard-container form-container">
+      <h2 className="form-title">Авторизация</h2>
+      <form method="post" onSubmit={onSubmit} className="form-login">
+        <label className="form-login__label">
           E-mail
-          <input type="email" required value={email} onChange={handlerOnChangeLogin} />
+          <input
+            className="form-login__input"
+            type="email"
+            required
+            value={email}
+            onChange={handlerOnChangeLogin}
+          />
         </label>
-        <label>
+        <label className="form-login__label">
           Password
-          <input type="password" required value={password} onChange={handlerOnChangePassword} />
+          <input
+            className="form-login__input"
+            type="password"
+            required
+            value={password}
+            onChange={handlerOnChangePassword}
+          />
         </label>
-        <button type="submit">Войти</button>
+        <button type="submit" className="btn btn-success">
+          Войти
+        </button>
       </form>
     </div>
-  )
-}
+  );
+};
