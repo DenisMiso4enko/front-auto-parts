@@ -4,6 +4,7 @@ export interface ProductInitialState {
   errors: any;
   totalPages: number;
   currentPage: number;
+  totalProducts: number;
 }
 
 export interface IProduct {
