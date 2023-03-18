@@ -10,6 +10,7 @@ const initialState: ProductInitialState = {
   loading: false,
   errors: "",
   totalPages: 1,
+  totalProducts: 1,
   currentPage: 1,
 };
 
@@ -24,6 +25,7 @@ export const fetchGetProducts = createAsyncThunk(
       const data = await response.json();
       dispatch(setTotalPages(data.totalPages));
       dispatch(setProducts(data.results))
+      dispatch(setTotalProducts(data.totalProducts))
     } catch (e) {
       console.log(e.message());
     }
@@ -42,6 +44,9 @@ export const productSlice = createSlice({
     },
     setCurrentPage(state, action) {
       state.currentPage = action.payload
+    },
+    setTotalProducts(state, action) {
+      state.totalProducts = action.payload
     }
   },
   extraReducers: (builder) => {
@@ -61,7 +66,7 @@ export const productSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { setTotalPages, setProducts, setCurrentPage } = productSlice.actions;
+export const { setTotalPages, setProducts, setCurrentPage, setTotalProducts } = productSlice.actions;
 
 export default productSlice.reducer;
 
