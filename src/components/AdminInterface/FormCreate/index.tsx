@@ -10,140 +10,341 @@ import { fetchGetMe } from "../../../store/slices/userSlice";
 import { PATHDOMAIN } from "../../../constants";
 import { onChangeInputFile, onSubmitForm } from "./formHandlers";
 import { formFields } from "./formFields";
+import { clearEditId, clearEditProduct } from "../../../store/slices/productSlice";
 import "./index.scss";
 
 export function FormCreate() {
   const navigate = useNavigate()
   const dispatch = useDispatch<AppDispatch>()
-    useEffect(() => {
+  useEffect(() => {
     dispatch(fetchGetMe())
+    return ( () => {
+      dispatch(clearEditId(''))
+      dispatch(clearEditProduct(null))
+    }
+    )
   }, [])
 
+  const { editId, editProduct } = useSelector(
+    (state: RootState) => state.products
+  );
+  console.log(editProduct, 'PRODUCT')
   const { userId } = useSelector((state: RootState) => state.user);
   const [images, setImages] = useState([]);
 
   //onChangeInputFile(path: string, setState)
   const handleChangeFile = onChangeInputFile(`${PATHDOMAIN}upload`, setImages)
   // onSubmitForm(state, path: string)
-  const handlerOnCreatePost = onSubmitForm(images, `${PATHDOMAIN}admin/createProduct`, navigate)
+  const handlerOnCreatePost = () => {
+    onSubmitForm(images, `${PATHDOMAIN}admin/createProduct`, navigate)
+  }
 
   if (!userId) return <h1>Авторизуйтесь!</h1>;
   return (
     <div className="form-wrapper">
-      <h2>Создание нового обьявления</h2>
+      <h2>{editId ? 'Редактирование обьявления' : 'Создание нового обьявления'}</h2>
       <Form className='form-create' onSubmit={handlerOnCreatePost}>
-        {formFields.map(input => {
-          if (input.type === 'text') {
-            return (
-              <Form.Group
-                key={input.label}
-                as={Row}
-                className="mb-6 custom-group"
-                // controlId="formCreate"
-              >
-                <Form.Label column sm={2}>
-                  {input.label}
-                </Form.Label>
-                <Col sm={10}>
-                  <Form.Control
-                    type="text"
-                    placeholder={input.placeholder}
-                    required={input.required}
-                  />
-                </Col>
-              </Form.Group>
-              )
-          } else if (input.type === 'select') {
-            return (
-              <Form.Group
-                key={input.label}
-                as={Row}
-                className="mb-3 custom-group"
-                // controlId="formCreate"
-              >
-                <Form.Label htmlFor="typeDescription" column sm={2}>
-                  {input.label}
-                </Form.Label>
-                <Col sm={10} className="custom-block">
-                  <Form.Select aria-label="Default select example">
-                    {input.option.map(i => <option key={i} value={i}>{i}</option>)}
-                  </Form.Select>
-                  <Form.Text id="typeDescription" muted>
-                    {input.text}
-                  </Form.Text>
-                </Col>
-              </Form.Group>
-            )
-          } else if (input.type === 'file') {
-            return (
-              <Form.Group
-                key={input.label}
-                as={Row}
-                className="mb-3 custom-group"
-                // controlId="formCreate"
-              >
-                <Form.Label column sm={2}>
-                  {input.label}
-                </Form.Label>
-                <Col sm={10}>
-                  <Form.Control
-                    type="file"
-                    placeholder={input.placeholder}
-                    multiple={input.multiple}
-                    onChange={handleChangeFile}
-                  />
-                </Col>
-              </Form.Group>
-            )
-          } else if (input.type === 'textarea') {
-            return (
-              <Form.Group
-                key={input.label}
-                as={Row}
-                className="mb-3 custom-group"
-                // controlId="formCreate"
-              >
-                <Form.Label column sm={2}>
-                  {input.label}
-                </Form.Label>
-                <Col sm={10}>
-                  <Form.Control
-                    type="textarea"
-                    placeholder={input.placeholder}
-                    style={{ minHeight: "100px" }}
-                  />
-                </Col>
-              </Form.Group>
-            )
-          } else {
-            return (
-              <Form.Group
-                key={input.label}
-                as={Row}
-                className="mb-3 custom-group">
-                <Form.Label as="legend" column sm={2}>
-                  {input.label}
-                </Form.Label>
-                <Col sm={10}>
-                  {input.value.map(i => (
-                    <Form.Check
-                      inline
-                      key={i}
-                      type="radio"
-                      label={i}
-                      name="formHorizontalRadios"
-                      id="formHorizontalRadios3"
-                      value={i}
-                    />
-                  ))}
-                </Col>
-              </Form.Group>
-            )
-          }
-        })}
+        <Form.Group
+          as={Row}
+          className="mb-6 custom-group"
+        >
+          <Form.Label column sm={2}>
+            Марка*
+          </Form.Label>
+          <Col sm={10}>
+            <Form.Control
+              type="text"
+              placeholder='Введите марку авто'
+              required={true}
+            />
+          </Col>
+        </Form.Group>
+
+        <Form.Group
+          as={Row}
+          className="mb-6 custom-group"
+        >
+          <Form.Label column sm={2}>
+            Модель*
+          </Form.Label>
+          <Col sm={10}>
+            <Form.Control
+              type="text"
+              placeholder='Введите модель авто'
+              required={true}
+            />
+          </Col>
+        </Form.Group>
+
+        <Form.Group
+          as={Row}
+          className="mb-6 custom-group"
+        >
+          <Form.Label column sm={2}>
+            Год выпуска*
+          </Form.Label>
+          <Col sm={10}>
+            <Form.Control
+              type="text"
+              placeholder='Введите год выпуска авто'
+              required={true}
+            />
+          </Col>
+        </Form.Group>
+
+        <Form.Group
+          as={Row}
+          className="mb-6 custom-group"
+        >
+          <Form.Label column sm={2}>
+            Модификация
+          </Form.Label>
+          <Col sm={10}>
+            <Form.Control
+              type="text"
+              placeholder='Введите модификацию авто'
+              required={false}
+            />
+          </Col>
+        </Form.Group>
+
+        <Form.Group
+          as={Row}
+          className="mb-6 custom-group"
+        >
+          <Form.Label column sm={2}>
+            Объём (л)
+          </Form.Label>
+          <Col sm={10}>
+            <Form.Control
+              type="text"
+              placeholder='Введите объём двигателя'
+              required={false}
+            />
+          </Col>
+        </Form.Group>
+
+        <Form.Group
+          as={Row}
+          className="mb-3 custom-group"
+        >
+          <Form.Label htmlFor="typeDescription" column sm={2}>
+            Топливо
+          </Form.Label>
+          <Col sm={10} className="custom-block">
+            <Form.Select aria-label="Default select example">
+              <option value='Бензин'>Бензин</option>
+              <option value='Дизель'>Дизель</option>
+            </Form.Select>
+            <Form.Text id="typeDescription" muted>
+              Выберите тип топлива
+            </Form.Text>
+          </Col>
+        </Form.Group>
+
+        <Form.Group
+          as={Row}
+          className="mb-3 custom-group"
+        >
+          <Form.Label htmlFor="typeDescription" column sm={2}>
+            Тип впуска
+          </Form.Label>
+          <Col sm={10} className="custom-block">
+            <Form.Select aria-label="Default select example">
+              <option value='Атмосферный'>Атмосферный</option>
+              <option value='Турбированный'>Турбированный</option>
+            </Form.Select>
+            <Form.Text id="typeDescription" muted>
+              Выберите тип впуска двигателя
+            </Form.Text>
+          </Col>
+        </Form.Group>
+
+        <Form.Group
+          as={Row}
+          className="mb-6 custom-group"
+        >
+          <Form.Label column sm={2}>
+            Тип кузова
+          </Form.Label>
+          <Col sm={10}>
+            <Form.Control
+              type="text"
+              placeholder='Введите тип кузова'
+              required={false}
+            />
+          </Col>
+        </Form.Group>
+
+        <Form.Group
+          as={Row}
+          className="mb-3 custom-group"
+        >
+          <Form.Label htmlFor="typeDescription" column sm={2}>
+            КПП
+          </Form.Label>
+          <Col sm={10} className="custom-block">
+            <Form.Select aria-label="Default select example">
+              <option value='Механическая'>Механическая</option>
+              <option value='Автоматическая'>Автоматическая</option>
+              <option value='Роботизированная'>Роботизированная</option>
+            </Form.Select>
+            <Form.Text id="typeDescription" muted>
+              Выберите тип КПП
+            </Form.Text>
+          </Col>
+        </Form.Group>
+
+        <Form.Group
+          as={Row}
+          className="mb-6 custom-group"
+        >
+          <Form.Label column sm={2}>
+            Запчасть*
+          </Form.Label>
+          <Col sm={10}>
+            <Form.Control
+              type="text"
+              placeholder='Введите название запчасти'
+              required={true}
+            />
+          </Col>
+        </Form.Group>
+
+        <Form.Group
+          as={Row}
+          className="mb-3 custom-group"
+        >
+          <Form.Label htmlFor="typeDescription" column sm={2}>
+            Состояние
+          </Form.Label>
+          <Col sm={10} className="custom-block">
+            <Form.Select aria-label="Default select example">
+              <option value='Новое'>Новое</option>
+              <option value='Б/У'>Б/У</option>
+            </Form.Select>
+            <Form.Text id="typeDescription" muted>
+              Информация о состоянии запчасти
+            </Form.Text>
+          </Col>
+        </Form.Group>
+
+        <Form.Group
+          as={Row}
+          className="mb-3 custom-group"
+        >
+          <Form.Label column sm={2}>
+            Фотографии
+          </Form.Label>
+          <Col sm={10}>
+            <Form.Control
+              type="file"
+              placeholder='Выберите фото'
+              multiple={true}
+              onChange={handleChangeFile}
+            />
+          </Col>
+        </Form.Group>
+
+        <Form.Group
+          as={Row}
+          className="mb-6 custom-group"
+        >
+          <Form.Label column sm={2}>
+            Артикул
+          </Form.Label>
+          <Col sm={10}>
+            <Form.Control
+              type="text"
+              placeholder='Введите артикул запчасти'
+              required={false}
+            />
+          </Col>
+        </Form.Group>
+
+        <Form.Group
+          as={Row}
+          className="mb-6 custom-group"
+        >
+          <Form.Label column sm={2}>
+            Номер
+          </Form.Label>
+          <Col sm={10}>
+            <Form.Control
+              type="text"
+              placeholder='Введите номер запчасти'
+              required={false}
+            />
+          </Col>
+        </Form.Group>
+
+        <Form.Group
+          as={Row}
+          className="mb-3 custom-group"
+        >
+          <Form.Label column sm={2}>
+            Описание
+          </Form.Label>
+          <Col sm={10}>
+            <Form.Control
+              type="textarea"
+              placeholder='Напишите описание запчасти'
+              style={{ minHeight: "100px" }}
+            />
+          </Col>
+        </Form.Group>
+
+        <Form.Group
+          as={Row}
+          className="mb-6 custom-group"
+        >
+          <Form.Label column sm={2}>
+            Цена
+          </Form.Label>
+          <Col sm={10}>
+            <Form.Control
+              type="text"
+              placeholder='Введите цену запчасти'
+              required={false}
+            />
+          </Col>
+        </Form.Group>
+        <Form.Group
+          as={Row}
+          className="mb-3 custom-group">
+          <Form.Label as="legend" column sm={2}>
+            Валюта
+          </Form.Label>
+          <Col sm={10}>
+              <Form.Check
+                inline
+                type="radio"
+                label='BYN'
+                name="formHorizontalRadios"
+                id="formHorizontalRadios3"
+                value='BYN'
+              />
+              <Form.Check
+                inline
+                type="radio"
+                label='USD'
+                name="formHorizontalRadios"
+                id="formHorizontalRadios3"
+                value='USD'
+              />
+              <Form.Check
+                inline
+                type="radio"
+                label='RUB'
+                name="formHorizontalRadios"
+                id="formHorizontalRadios3"
+                value='RUB'
+              />
+          </Col>
+        </Form.Group>
         <Form.Group as={Row} className="mb-3 custom-group">
           <Col sm={{ span: 10, offset: 2 }}>
-            <Button type="submit">Добавить обьявление</Button>
+            <Button type="submit">{editId ? 'Сохранить изменения' : 'Добавить обьявление'}</Button>
           </Col>
         </Form.Group>
       </Form>

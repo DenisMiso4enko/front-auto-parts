@@ -1,5 +1,6 @@
 import axios from "axios";
 import { httpRequest } from "../../../httpRequests";
+import { clearEditId } from "../../../store/slices/productSlice";
 
 export const onChangeInputFile = (path: string, setState: any) => {
   return async (e) => {
@@ -34,7 +35,7 @@ export const onSubmitForm = (state: any, path: string, nav: any) => {
       volume: event.target[4].value,
       fuel: event.target[5].value,
       type: event.target[6].value,
-      bodeType: event.target[7].value,
+      bodyType: event.target[7].value,
       box: event.target[8].value,
       product: event.target[9].value,
       state: event.target[10].value,
@@ -47,5 +48,5 @@ export const onSubmitForm = (state: any, path: string, nav: any) => {
     };
     const responce = await httpRequest(path, "POST", formInfo);
     if (responce.ok) nav("/admin/dashboard")
-    };
+  };
 };

@@ -2,7 +2,7 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { AppDispatch, RootState } from "../../../store";
-import { fetchGetProducts } from "../../../store/slices/productSlice";
+import { fetchGetEditProduct, fetchGetProducts } from "../../../store/slices/productSlice";
 import FormSearch from "../../../components/AdminInterface/FormSearch/FormSearch";
 import { Table } from "react-bootstrap";
 import { IProduct } from "../../../types/productTypes";
@@ -16,18 +16,19 @@ import "bootstrap/dist/css/bootstrap.min.css";
 export const Panel = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
-  const { products, currentPage, totalProducts } = useSelector(
-    (state: RootState) => state.products
-  );
   const { userId } = useSelector((state: RootState) => state.user);
+  const { products, currentPage, totalProducts, editId } = useSelector(
+    (state: RootState) => state.products
+    );
+    console.log(editId)
 
   const handlerCreateProduct = () => {
     navigate("/admin/dashboard/create-post");
   };
 
-  const handleDeleteProduct = async (id: string) => {
+  const handlerDeleteProduct = async (id: string) => {
     try {
-      const res = await httpRequest(
+      await httpRequest(
         `${PATHDOMAIN}admin/deleteProduct`,
         "DELETE",
         { id }
@@ -37,6 +38,12 @@ export const Panel = () => {
       alert(e.message);
     }
   };
+
+  const handlerEditProduct = (id: string) => {
+    dispatch(fetchGetEditProduct(id))
+    navigate("/admin/dashboard/create-post");
+
+  }
 
   return (
     <>
@@ -80,12 +87,12 @@ export const Panel = () => {
               <td>{el.views}</td>
               <td>
                 <div className="tb-actions">
-                  <button className="btn">
+                  <button className="btn" onClick={() => handlerEditProduct(el._id)}>
                     <FaRegEdit />
                   </button>
                   <button
                     className="btn btn-lg"
-                    onClick={() => handleDeleteProduct(el._id)}
+                    onClick={() => handlerDeleteProduct(el._id)}
                   >
                     <MdDelete />
                   </button>

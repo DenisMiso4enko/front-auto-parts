@@ -1,10 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import type { PayloadAction } from "@reduxjs/toolkit";
 import { httpRequest } from "../../httpRequests";
 import { PATHDOMAIN } from "../../constants";
-import { authAdmin } from "./userSlice";
 import { ProductInitialState } from "../../types/productTypes";
-// denekimoff
+
 const initialState: ProductInitialState = {
   products: [],
   loading: false,
@@ -12,8 +10,28 @@ const initialState: ProductInitialState = {
   totalPages: 1,
   currentPage: 1,
   totalProducts: 0,
+  editId: '',
+  editProduct: null,
 };
-// fuck
+
+export const fetchGetEditProduct = createAsyncThunk(
+  "product/fetchGetEditProduct",
+  async function (id: string, { dispatch }) {
+    try {
+      const response: Response = await httpRequest(
+        `${PATHDOMAIN}admin/getOne/${id}`,
+        "GET"
+      );
+      const product = await response.json();
+      console.log(product)
+      dispatch(setEditId(id))
+      dispatch(setEditProduct(product))
+    } catch (e) {
+      console.log(e.message())
+    }
+  }
+)
+
 export const fetchGetProducts = createAsyncThunk(
   "product/fetchGetProducts",
   async function (page: number, { dispatch }) {
@@ -23,7 +41,6 @@ export const fetchGetProducts = createAsyncThunk(
         "GET"
       );
       const data = await response.json();
-      console.log(data);
       dispatch(setTotalPages(data.totalPages));
       dispatch(setProducts(data.results));
       dispatch(setTotalProducts(data.totalProducts));
@@ -49,6 +66,18 @@ export const productSlice = createSlice({
     setTotalProducts(state, action) {
       state.totalProducts = action.payload;
     },
+    setEditId(state, action) {
+      state.editId = action.payload
+    },
+    clearEditId(state, action) {
+      state.editId = action.payload
+    },
+    setEditProduct(state, action) {
+      state.editProduct = action.payload
+    },
+    clearEditProduct(state, action) {
+      state.editProduct = action.payload
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchGetProducts.pending, (state, action) => {
@@ -66,9 +95,15 @@ export const productSlice = createSlice({
   },
 });
 
-// Action creators are generated for each case reducer function
-export const { setTotalPages, setProducts, setCurrentPage, setTotalProducts } =
-  productSlice.actions;
+export const {
+  setTotalPages,
+  setProducts,
+  setCurrentPage,
+  setTotalProducts,
+  setEditId,
+  setEditProduct,
+  clearEditId,
+  clearEditProduct,
+} = productSlice.actions;
 
 export default productSlice.reducer;
-// fuck off
