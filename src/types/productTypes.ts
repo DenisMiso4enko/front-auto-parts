@@ -5,6 +5,8 @@ export interface ProductInitialState {
   totalPages: number;
   currentPage: number;
   totalProducts: number;
+  editId: string;
+  editProduct: IProduct;
 }
 
 export interface IProduct {
