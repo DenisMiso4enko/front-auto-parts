@@ -2,9 +2,6 @@ export interface ProductInitialState {
   products: any;
   loading: boolean;
   errors: any;
-  totalPages: number;
-  totalProducts: number;
-  currentPage: number;
 }
 
 export interface IProduct {
@@ -28,5 +25,4 @@ export interface IProduct {
   year: number;
   __v: number;
   _id: string;
-  views: number
 }
