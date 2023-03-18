@@ -28,4 +28,5 @@ export interface IProduct {
   year: number;
   __v: number;
   _id: string;
+  views: number;
 }
