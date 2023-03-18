@@ -13,7 +13,7 @@ const initialState: ProductInitialState = {
   currentPage: 1,
   totalProducts: 0,
 };
-
+// fuck
 export const fetchGetProducts = createAsyncThunk(
   "product/fetchGetProducts",
   async function (page: number, { dispatch }) {
@@ -23,10 +23,10 @@ export const fetchGetProducts = createAsyncThunk(
         "GET"
       );
       const data = await response.json();
-      console.log(data)
+      console.log(data);
       dispatch(setTotalPages(data.totalPages));
-      dispatch(setProducts(data.results))
-      dispatch(setTotalProducts(data.totalProducts))
+      dispatch(setProducts(data.results));
+      dispatch(setTotalProducts(data.totalProducts));
     } catch (e) {
       console.log(e.message());
     }
@@ -44,11 +44,11 @@ export const productSlice = createSlice({
       state.products = action.payload;
     },
     setCurrentPage(state, action) {
-      state.currentPage = action.payload
+      state.currentPage = action.payload;
     },
     setTotalProducts(state, action) {
-      state.totalProducts = action.payload
-    }
+      state.totalProducts = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchGetProducts.pending, (state, action) => {
@@ -67,8 +67,7 @@ export const productSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { setTotalPages, setProducts, setCurrentPage, setTotalProducts } = productSlice.actions;
+export const { setTotalPages, setProducts, setCurrentPage, setTotalProducts } =
+  productSlice.actions;
 
 export default productSlice.reducer;
-
-
