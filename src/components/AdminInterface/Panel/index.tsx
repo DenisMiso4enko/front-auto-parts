@@ -16,7 +16,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 export const Panel = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
-  const { products, currentPage, totalProducts } = useSelector((state: RootState) => state.products);
+  const { products, currentPage } = useSelector((state: RootState) => state.products);
   const { userId } = useSelector((state: RootState) => state.user);
 
   const handlerCreateProduct = () => {
@@ -45,7 +45,7 @@ export const Panel = () => {
         <div className="dashboard__head">
           <h3>Товары</h3>
           <div className="dashboard__actions">
-            <span>Всего: {totalProducts}</span>
+            <span>Всего: {products.length}</span>
             <button className="btn btn-success" onClick={handlerCreateProduct}>
               Создать обьявление
             </button>
@@ -75,7 +75,6 @@ export const Panel = () => {
                   {el.price} {el.currency}
                 </td>
                 <td>{el.createdAt}</td>
-                <td>{el.views}</td>
                 <td>
                   <div className="tb-actions">
                     <button className="btn">
