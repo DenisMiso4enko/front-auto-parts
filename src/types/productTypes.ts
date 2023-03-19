@@ -5,7 +5,6 @@ export interface ProductInitialState {
   totalPages: number;
   currentPage: number;
   totalProducts: number;
-  editId: string;
   editProduct: IProduct;
 }
 
@@ -25,6 +24,7 @@ export interface IProduct {
   product: string;
   state: string;
   type: string;
+  bodyType: string;
   updatedAt: string;
   volume: string;
   year: number;

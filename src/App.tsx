@@ -15,9 +15,7 @@ export default function App() {
             <Route index element={<MainPage />} />
             <Route path="/admin" element={<Login />} />
             <Route path="/admin/dashboard" element={<Dashboard />} />
-            <Route
-              path="/admin/dashboard/create-post"
-              element={<FormCreate />}
+            <Route path="/admin/dashboard/create-post" element={<FormCreate />}
             />
           </Route>
         </Routes>

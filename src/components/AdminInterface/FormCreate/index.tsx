@@ -8,42 +8,32 @@ import Row from "react-bootstrap/Row";
 import { AppDispatch, RootState } from "../../../store";
 import { fetchGetMe } from "../../../store/slices/userSlice";
 import { PATHDOMAIN } from "../../../constants";
-import { onChangeInputFile, onSubmitForm } from "./formHandlers";
-import { formFields } from "./formFields";
-import { clearEditId, clearEditProduct } from "../../../store/slices/productSlice";
+import { onChangeInputFile, onSubmitForm, onUpdateProduct } from "./formHandlers";
 import "./index.scss";
 
 export function FormCreate() {
   const navigate = useNavigate()
   const dispatch = useDispatch<AppDispatch>()
+
   useEffect(() => {
     dispatch(fetchGetMe())
-    return ( () => {
-      dispatch(clearEditId(''))
-      dispatch(clearEditProduct(null))
-    }
-    )
   }, [])
 
-  const { editId, editProduct } = useSelector(
-    (state: RootState) => state.products
-  );
+  const { editProduct } = useSelector((state: RootState) => state.products);
   console.log(editProduct, 'PRODUCT')
   const { userId } = useSelector((state: RootState) => state.user);
   const [images, setImages] = useState([]);
 
-  //onChangeInputFile(path: string, setState)
-  const handleChangeFile = onChangeInputFile(`${PATHDOMAIN}upload`, setImages)
-  // onSubmitForm(state, path: string)
-  const handlerOnCreatePost = () => {
-    onSubmitForm(images, `${PATHDOMAIN}admin/createProduct`, navigate)
-  }
+  const handleChangeFile = onChangeInputFile(`${PATHDOMAIN}/upload`, setImages)
+  const handlerOnCreatePost = onSubmitForm(images, `${PATHDOMAIN}/admin/createProduct`, navigate)
+  const handlerOnUpdatePost = onUpdateProduct(images, `${PATHDOMAIN}/admin/updateProduct/${editProduct?._id}`, navigate)
+  // const handlerOnUpdatePost = () => console.log('sbmt')
 
   if (!userId) return <h1>Авторизуйтесь!</h1>;
   return (
     <div className="form-wrapper">
-      <h2>{editId ? 'Редактирование обьявления' : 'Создание нового обьявления'}</h2>
-      <Form className='form-create' onSubmit={handlerOnCreatePost}>
+      <h2>{editProduct ? 'Редактирование обьявления' : 'Создание нового обьявления'}</h2>
+      <Form className='form-create' onSubmit={editProduct ? handlerOnUpdatePost : handlerOnCreatePost}>
         <Form.Group
           as={Row}
           className="mb-6 custom-group"
@@ -53,6 +43,7 @@ export function FormCreate() {
           </Form.Label>
           <Col sm={10}>
             <Form.Control
+              defaultValue={editProduct ? editProduct.mark : ''}
               type="text"
               placeholder='Введите марку авто'
               required={true}
@@ -69,6 +60,7 @@ export function FormCreate() {
           </Form.Label>
           <Col sm={10}>
             <Form.Control
+              defaultValue={editProduct ? editProduct.model : ''}
               type="text"
               placeholder='Введите модель авто'
               required={true}
@@ -85,6 +77,7 @@ export function FormCreate() {
           </Form.Label>
           <Col sm={10}>
             <Form.Control
+              defaultValue={editProduct ? editProduct.year : ''}
               type="text"
               placeholder='Введите год выпуска авто'
               required={true}
@@ -101,6 +94,7 @@ export function FormCreate() {
           </Form.Label>
           <Col sm={10}>
             <Form.Control
+              defaultValue={editProduct ? editProduct.mode : ''}
               type="text"
               placeholder='Введите модификацию авто'
               required={false}
@@ -117,6 +111,7 @@ export function FormCreate() {
           </Form.Label>
           <Col sm={10}>
             <Form.Control
+              defaultValue={editProduct ? editProduct.volume : ''}
               type="text"
               placeholder='Введите объём двигателя'
               required={false}
@@ -132,7 +127,7 @@ export function FormCreate() {
             Топливо
           </Form.Label>
           <Col sm={10} className="custom-block">
-            <Form.Select aria-label="Default select example">
+            <Form.Select aria-label="Default select example" defaultValue={editProduct ? editProduct.fuel : ''}>
               <option value='Бензин'>Бензин</option>
               <option value='Дизель'>Дизель</option>
             </Form.Select>
@@ -150,7 +145,7 @@ export function FormCreate() {
             Тип впуска
           </Form.Label>
           <Col sm={10} className="custom-block">
-            <Form.Select aria-label="Default select example">
+            <Form.Select aria-label="Default select example" defaultValue={editProduct ? editProduct.type : ''}>
               <option value='Атмосферный'>Атмосферный</option>
               <option value='Турбированный'>Турбированный</option>
             </Form.Select>
@@ -169,6 +164,7 @@ export function FormCreate() {
           </Form.Label>
           <Col sm={10}>
             <Form.Control
+              defaultValue={editProduct ? editProduct.bodyType : ''}
               type="text"
               placeholder='Введите тип кузова'
               required={false}
@@ -184,7 +180,7 @@ export function FormCreate() {
             КПП
           </Form.Label>
           <Col sm={10} className="custom-block">
-            <Form.Select aria-label="Default select example">
+            <Form.Select aria-label="Default select example" defaultValue={editProduct ? editProduct.box : ''}>
               <option value='Механическая'>Механическая</option>
               <option value='Автоматическая'>Автоматическая</option>
               <option value='Роботизированная'>Роботизированная</option>
@@ -204,6 +200,7 @@ export function FormCreate() {
           </Form.Label>
           <Col sm={10}>
             <Form.Control
+              defaultValue={editProduct ? editProduct.product : ''}
               type="text"
               placeholder='Введите название запчасти'
               required={true}
@@ -219,7 +216,7 @@ export function FormCreate() {
             Состояние
           </Form.Label>
           <Col sm={10} className="custom-block">
-            <Form.Select aria-label="Default select example">
+            <Form.Select aria-label="Default select example" value={editProduct ? editProduct.state : ''}>
               <option value='Новое'>Новое</option>
               <option value='Б/У'>Б/У</option>
             </Form.Select>
@@ -255,6 +252,7 @@ export function FormCreate() {
           </Form.Label>
           <Col sm={10}>
             <Form.Control
+              defaultValue={editProduct ? editProduct.article : ''}
               type="text"
               placeholder='Введите артикул запчасти'
               required={false}
@@ -271,6 +269,7 @@ export function FormCreate() {
           </Form.Label>
           <Col sm={10}>
             <Form.Control
+              defaultValue={editProduct ? editProduct.numberOfProduct : ''}
               type="text"
               placeholder='Введите номер запчасти'
               required={false}
@@ -287,6 +286,7 @@ export function FormCreate() {
           </Form.Label>
           <Col sm={10}>
             <Form.Control
+              defaultValue={editProduct ? editProduct.description : ''}
               type="textarea"
               placeholder='Напишите описание запчасти'
               style={{ minHeight: "100px" }}
@@ -303,6 +303,7 @@ export function FormCreate() {
           </Form.Label>
           <Col sm={10}>
             <Form.Control
+              defaultValue={editProduct ? editProduct.price : ''}
               type="text"
               placeholder='Введите цену запчасти'
               required={false}
@@ -344,7 +345,7 @@ export function FormCreate() {
         </Form.Group>
         <Form.Group as={Row} className="mb-3 custom-group">
           <Col sm={{ span: 10, offset: 2 }}>
-            <Button type="submit">{editId ? 'Сохранить изменения' : 'Добавить обьявление'}</Button>
+            <Button type="submit">{editProduct ? 'Сохранить изменения' : 'Добавить обьявление'}</Button>
           </Col>
         </Form.Group>
       </Form>

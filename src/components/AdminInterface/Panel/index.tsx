@@ -2,7 +2,7 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { AppDispatch, RootState } from "../../../store";
-import { fetchGetEditProduct, fetchGetProducts } from "../../../store/slices/productSlice";
+import { clearEditProduct, fetchGetEditProduct, fetchGetProducts } from "../../../store/slices/productSlice";
 import FormSearch from "../../../components/AdminInterface/FormSearch/FormSearch";
 import { Table } from "react-bootstrap";
 import { IProduct } from "../../../types/productTypes";
@@ -12,15 +12,19 @@ import { httpRequest } from "../../../httpRequests";
 import { PATHDOMAIN } from "../../../constants";
 import { columns } from "./dataTableColumns";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { useEffect } from "react";
 
 export const Panel = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const { userId } = useSelector((state: RootState) => state.user);
-  const { products, currentPage, totalProducts, editId } = useSelector(
+  const { products, currentPage, totalProducts } = useSelector(
     (state: RootState) => state.products
     );
-    console.log(editId)
+
+  useEffect(() => {
+    dispatch(clearEditProduct(null))
+  }, [])
 
   const handlerCreateProduct = () => {
     navigate("/admin/dashboard/create-post");
@@ -29,7 +33,7 @@ export const Panel = () => {
   const handlerDeleteProduct = async (id: string) => {
     try {
       await httpRequest(
-        `${PATHDOMAIN}admin/deleteProduct`,
+        `${PATHDOMAIN}/admin/deleteProduct`,
         "DELETE",
         { id }
       );
