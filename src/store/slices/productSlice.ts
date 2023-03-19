@@ -10,7 +10,6 @@ const initialState: ProductInitialState = {
   totalPages: 1,
   currentPage: 1,
   totalProducts: 0,
-  editId: '',
   editProduct: null,
 };
 
@@ -19,12 +18,10 @@ export const fetchGetEditProduct = createAsyncThunk(
   async function (id: string, { dispatch }) {
     try {
       const response: Response = await httpRequest(
-        `${PATHDOMAIN}admin/getOne/${id}`,
+        `${PATHDOMAIN}/admin/getOne/${id}`,
         "GET"
       );
       const product = await response.json();
-      console.log(product)
-      dispatch(setEditId(id))
       dispatch(setEditProduct(product))
     } catch (e) {
       console.log(e.message())
@@ -37,7 +34,7 @@ export const fetchGetProducts = createAsyncThunk(
   async function (page: number, { dispatch }) {
     try {
       const response: Response = await httpRequest(
-        `${PATHDOMAIN}admin/getProducts?page=${page}&limit=5`,
+        `${PATHDOMAIN}/admin/getProducts?page=${page}&limit=5`,
         "GET"
       );
       const data = await response.json();
@@ -65,12 +62,6 @@ export const productSlice = createSlice({
     },
     setTotalProducts(state, action) {
       state.totalProducts = action.payload;
-    },
-    setEditId(state, action) {
-      state.editId = action.payload
-    },
-    clearEditId(state, action) {
-      state.editId = action.payload
     },
     setEditProduct(state, action) {
       state.editProduct = action.payload
@@ -100,9 +91,7 @@ export const {
   setProducts,
   setCurrentPage,
   setTotalProducts,
-  setEditId,
   setEditProduct,
-  clearEditId,
   clearEditProduct,
 } = productSlice.actions;
 

@@ -11,7 +11,7 @@ export const fetchAuthAdmin = createAsyncThunk(
   "user/fetchAuthAdmin",
   async function (action: any, { dispatch }) {
     const { userInfo, navigate } = action;
-    const response: Response = await httpRequest(`${PATHDOMAIN}admin/auth`, 'POST', userInfo)
+    const response: Response = await httpRequest(`${PATHDOMAIN}/admin/auth`, 'POST', userInfo)
     if (response.ok) {
       const data = await response.json();
       const { accessToken, refreshToken, userId } = data;
@@ -31,7 +31,7 @@ export const fetchGetMe = createAsyncThunk(
   async function (_, { dispatch }) {
     const token = localStorage.getItem("jwtAccess");
     if (token !== "undefined") {
-      const response: Response = await httpRequest(`${PATHDOMAIN}admin/verify`, 'POST', {token})
+      const response: Response = await httpRequest(`${PATHDOMAIN}/admin/verify`, 'POST', {token})
       const data = await response.json();
 
       if (data) {
@@ -40,7 +40,7 @@ export const fetchGetMe = createAsyncThunk(
       } else {
         const refresh_token = localStorage.getItem("jwtRefresh");
         if (refresh_token !== "undefined") {
-          const newToken: Response = await httpRequest(`${PATHDOMAIN}admin/refreshToken`, 'POST', {refresh_token})
+          const newToken: Response = await httpRequest(`${PATHDOMAIN}/admin/refreshToken`, 'POST', {refresh_token})
           const data = await newToken.json();
           const { accessToken, refreshToken, userId } = data;
           localStorage.setItem("jwtAccess", accessToken);
