@@ -2,7 +2,11 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { AppDispatch, RootState } from "../../../store";
-import { clearEditProduct, fetchGetEditProduct, fetchGetProducts } from "../../../store/slices/productSlice";
+import {
+  clearEditProduct,
+  fetchGetEditProduct,
+  fetchGetProducts,
+} from "../../../store/slices/productSlice";
 import FormSearch from "../../../components/AdminInterface/FormSearch/FormSearch";
 import { Table } from "react-bootstrap";
 import { IProduct } from "../../../types/productTypes";
@@ -12,7 +16,7 @@ import { httpRequest } from "../../../httpRequests";
 import { PATHDOMAIN } from "../../../constants";
 import { columns } from "./dataTableColumns";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { useEffect } from "react";
+import dayjs from "dayjs";
 
 export const Panel = () => {
   const navigate = useNavigate();
@@ -20,11 +24,7 @@ export const Panel = () => {
   const { userId } = useSelector((state: RootState) => state.user);
   const { products, currentPage, totalProducts } = useSelector(
     (state: RootState) => state.products
-    );
-
-  useEffect(() => {
-    dispatch(clearEditProduct(null))
-  }, [])
+  );
 
   const handlerCreateProduct = () => {
     navigate("/admin/dashboard/create-post");
@@ -32,11 +32,7 @@ export const Panel = () => {
 
   const handlerDeleteProduct = async (id: string) => {
     try {
-      await httpRequest(
-        `${PATHDOMAIN}/admin/deleteProduct`,
-        "DELETE",
-        { id }
-      );
+      await httpRequest(`${PATHDOMAIN}/admin/deleteProduct`, "DELETE", { id });
       dispatch(fetchGetProducts(currentPage));
     } catch (e) {
       alert(e.message);
@@ -44,10 +40,8 @@ export const Panel = () => {
   };
 
   const handlerEditProduct = (id: string) => {
-    dispatch(fetchGetEditProduct(id))
-    navigate("/admin/dashboard/create-post");
-
-  }
+    navigate(`/admin/dashboard/${id}/edit`);
+  };
 
   return (
     <>
@@ -87,11 +81,14 @@ export const Panel = () => {
               <td>
                 {el.price} {el.currency}
               </td>
-              <td>{el.createdAt}</td>
+              <td>{dayjs(el?.createdAt).format("MM.D.YYYY")}</td>
               <td>{el.views}</td>
               <td>
                 <div className="tb-actions">
-                  <button className="btn" onClick={() => handlerEditProduct(el._id)}>
+                  <button
+                    className="btn"
+                    onClick={() => handlerEditProduct(el._id)}
+                  >
                     <FaRegEdit />
                   </button>
                   <button

@@ -22,19 +22,19 @@ export const fetchGetEditProduct = createAsyncThunk(
         "GET"
       );
       const product = await response.json();
-      dispatch(setEditProduct(product))
+      dispatch(setEditProduct(product));
     } catch (e) {
-      console.log(e.message())
+      console.log(e.message());
     }
   }
-)
+);
 
 export const fetchGetProducts = createAsyncThunk(
   "product/fetchGetProducts",
   async function (page: number, { dispatch }) {
     try {
       const response: Response = await httpRequest(
-        `${PATHDOMAIN}/admin/getProducts?page=${page}&limit=5`,
+        `${PATHDOMAIN}/admin/getProducts?page=${page}&limit=10`,
         "GET"
       );
       const data = await response.json();
@@ -64,10 +64,10 @@ export const productSlice = createSlice({
       state.totalProducts = action.payload;
     },
     setEditProduct(state, action) {
-      state.editProduct = action.payload
+      state.editProduct = action.payload;
     },
     clearEditProduct(state, action) {
-      state.editProduct = action.payload
+      state.editProduct = action.payload;
     },
   },
   extraReducers: (builder) => {
