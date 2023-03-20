@@ -32,3 +32,11 @@ export interface IProduct {
   _id: string;
   views: number;
 }
+
+export interface IOptionsInitialState {
+  autos: any,
+  options: any,
+  status: string,
+  errors: any
+  
+}

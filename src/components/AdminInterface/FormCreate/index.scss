@@ -25,3 +25,14 @@ input, select {
     width: fit-content;
   }
 }
+
+
+.image-preview {
+  display: flex;
+  gap: 10px;
+  &__item {
+    width: 150px;
+    height: auto;
+  }
+
+}
