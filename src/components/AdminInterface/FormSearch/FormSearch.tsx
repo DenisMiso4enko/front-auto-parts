@@ -10,7 +10,7 @@ const FormSearch = () => {
     e.preventDefault();
 
     const req = await fetch(
-      `${PATHDOMAIN}admin/search?search=${product}&model=${mark}&page=1&limit=10`
+      `${PATHDOMAIN}admin/search?product=${product}&mark=${mark}&page=1&limit=10`
     );
     const { results } = await req.json();
     console.log(results);
