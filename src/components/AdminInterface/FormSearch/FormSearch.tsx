@@ -3,14 +3,14 @@ import "./index.scss";
 import { PATHDOMAIN } from "../../../constants";
 
 const FormSearch = () => {
-  const [model, setModel] = useState("");
-  const [search, setSearch] = useState("");
+  const [mark, setMark] = useState("");
+  const [product, setProduct] = useState("");
 
   const handlerSubmit = async (e) => {
     e.preventDefault();
 
     const req = await fetch(
-      `${PATHDOMAIN}admin/search?search=${search}&model=${model}&page=1&limit=5`
+      `${PATHDOMAIN}admin/search?search=${product}&model=${mark}&page=1&limit=10`
     );
     const { results } = await req.json();
     console.log(results);
@@ -23,16 +23,16 @@ const FormSearch = () => {
           className="search-input"
           type="text"
           placeholder="Поиск..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
+          value={product}
+          onChange={(e) => setProduct(e.target.value)}
         />
       </div>
       <div className="form-search__options">
         <select
           name="model"
           id="model"
-          value={model}
-          onChange={(e) => setModel(e.target.value)}
+          value={mark}
+          onChange={(e) => setMark(e.target.value)}
         >
           <option value="Opel">Opel</option>
           <option value="Audi">Audi</option>
