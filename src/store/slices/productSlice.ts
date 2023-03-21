@@ -11,6 +11,8 @@ const initialState: ProductInitialState = {
   currentPage: 1,
   totalProducts: 0,
   editProduct: null,
+  productQuery: "",
+  markQuery: "",
 };
 
 export const fetchGetEditProduct = createAsyncThunk(
@@ -22,7 +24,7 @@ export const fetchGetEditProduct = createAsyncThunk(
         "GET"
       );
       const product = await response.json();
-      dispatch(setEditProduct(product));
+      // dispatch(setEditProduct(product));
     } catch (e) {
       console.log(e.message());
     }
@@ -43,6 +45,25 @@ export const fetchGetProducts = createAsyncThunk(
       dispatch(setTotalProducts(data.totalProducts));
     } catch (e) {
       console.log(e.message());
+    }
+  }
+);
+
+export const fetchSearchProducts = createAsyncThunk(
+  "product/fetchSearchProducts",
+  async function (params: any, { dispatch }) {
+    const { page, product, mark } = params;
+    try {
+      const response: Response = await httpRequest(
+        `${PATHDOMAIN}/admin/search?product=${product}&mark=${mark}&page=${page}&limit=10`,
+        "GET"
+      );
+      const data = await response.json();
+      dispatch(setTotalPages(data.totalPages));
+      dispatch(setProducts(data.results));
+      dispatch(setTotalProducts(data.totalProducts));
+    } catch (e) {
+      console.log(e.message);
     }
   }
 );
@@ -69,6 +90,12 @@ export const productSlice = createSlice({
     clearEditProduct(state, action) {
       state.editProduct = action.payload;
     },
+    setProductQuery(state, action) {
+      state.productQuery = action.payload;
+    },
+    setMarkQuery(state, action) {
+      state.markQuery = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchGetProducts.pending, (state, action) => {
@@ -82,17 +109,23 @@ export const productSlice = createSlice({
       builder.addCase(fetchGetProducts.fulfilled, (state, action) => {
         state.loading = false;
         state.errors = "";
+      }),
+      builder.addCase(fetchSearchProducts.pending, (state, action) => {
+        state.loading = true;
+        state.errors = "";
+      }),
+      builder.addCase(fetchSearchProducts.rejected, (state, action) => {
+        state.loading = false;
+        state.errors = action.payload;
+      }),
+      builder.addCase(fetchSearchProducts.fulfilled, (state, action) => {
+        state.loading = false;
+        state.errors = "";
       });
   },
 });
 
-export const {
-  setTotalPages,
-  setProducts,
-  setCurrentPage,
-  setTotalProducts,
-  setEditProduct,
-  clearEditProduct,
-} = productSlice.actions;
+export const { setTotalPages, setProducts, setCurrentPage, setTotalProducts } =
+  productSlice.actions;
 
 export default productSlice.reducer;

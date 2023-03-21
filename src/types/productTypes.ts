@@ -6,6 +6,8 @@ export interface ProductInitialState {
   currentPage: number;
   totalProducts: number;
   editProduct: IProduct;
+  productQuery: string;
+  markQuery: string;
 }
 
 export interface IProduct {
@@ -34,9 +36,8 @@ export interface IProduct {
 }
 
 export interface IOptionsInitialState {
-  autos: any,
-  options: any,
-  status: string,
-  errors: any
-  
+  autos: any;
+  options: any;
+  status: string;
+  errors: any;
 }
