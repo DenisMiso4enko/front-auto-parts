@@ -1,8 +1,9 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { PATHDOMAIN } from "../../constants";
 import { RootState } from "../../store";
+import { NavMenuAdmin } from "../AdminInterface/NavMenuAdmin";
+import { NavMenuUser } from "../UserInterface/NavMenuUser";
 import "./index.scss";
 
 export const Header = () => {
@@ -11,9 +12,9 @@ export const Header = () => {
 
   return (
     <div className="header">
-      <div className="header__logo" onClick={() => navigate(`${userId ? 'admin/dashboard' : ''}`)}>LOGO</div>
+      <div className="header__logo" onClick={() => navigate(`${userId ? 'admin/dashboard' : ''}`)}>AUTOGOMEL</div>
     {
-      userId ? 'Hello Admin' : 'Hello User'
+      userId ? <NavMenuAdmin /> : <NavMenuUser />
     }
     </div>
   );
