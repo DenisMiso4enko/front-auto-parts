@@ -7,6 +7,15 @@ import { PATHDOMAIN } from "../../constants";
 
 //httpRrequest(path: string, method: string, body: any) => {}
 
+export const requestLogOut = createAsyncThunk(
+  "user/requestLogOut",
+  async function (_, { dispatch }) {
+    localStorage.removeItem("jwtAccess");
+    localStorage.removeItem("jwtRefresh");
+    dispatch(logOutAdmin)
+  }
+)
+
 export const fetchAuthAdmin = createAsyncThunk(
   "user/fetchAuthAdmin",
   async function (action: any, { dispatch }) {
@@ -67,6 +76,9 @@ const userSlice = createSlice({
     authAdmin(state, action) {
       state.userId = action.payload;
     },
+    logOutAdmin(state, action) {
+      state.userId = ""
+    }
   },
   extraReducers: (builder) => {
     builder.addCase(fetchAuthAdmin.pending, (state) => {
@@ -90,5 +102,5 @@ const userSlice = createSlice({
   },
 });
 
-export const { authAdmin } = userSlice.actions;
+export const { authAdmin, logOutAdmin } = userSlice.actions;
 export default userSlice.reducer;
