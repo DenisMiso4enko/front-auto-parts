@@ -60,7 +60,6 @@ export function FormCreate() {
   const modelsUpdate = autos?.find((el) => el.mark === mark);
 
   const handlerOnChangeMarks = (e: any) => {
-    // не правильно работает при изменении туда сюда
     const mark = e.target.value;
     setMark(mark);
     const { models } = autos?.find((el) => el.mark === mark);

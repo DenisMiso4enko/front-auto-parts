@@ -1,7 +1,8 @@
-import { configureStore } from "@reduxjs/toolkit"
-import userSlice from "./slices/userSlice"
+import { configureStore } from "@reduxjs/toolkit";
+import userSlice from "./slices/userSlice";
 import productSlice from "./slices/productSlice";
 import settingsSlice from "./slices/settingsSlice";
+import autoPartsSlice from "./slices/autoPartsSlice";
 import { ThunkDispatch } from "@reduxjs/toolkit";
 
 export const store = configureStore({
@@ -9,9 +10,10 @@ export const store = configureStore({
     user: userSlice,
     products: productSlice,
     settings: settingsSlice,
-  }
-})
+    autoParts: autoPartsSlice,
+  },
+});
 
 export type RootState = ReturnType<typeof store.getState>;
 // export type AppDispatch = typeof store.dispatch;
-export type AppDispatch = ThunkDispatch<any,any,any>
+export type AppDispatch = ThunkDispatch<any, any, any>;

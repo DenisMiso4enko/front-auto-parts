@@ -1,0 +1,15 @@
+.parts-list {
+  //background: #F4F4F4;
+  width: 80%;
+  //height: 2000px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  &__pagination {
+    margin-top: auto;
+    display: flex;
+
+  }
+}
+

@@ -1,5 +1,4 @@
 export const columns = [
-  { dataField: "#", text: "#" },
   { dataField: "Марка и Модель", text: "Марка и Модель" },
   {
     dataField: "Описание, номер з/ч, склад.инфо ",

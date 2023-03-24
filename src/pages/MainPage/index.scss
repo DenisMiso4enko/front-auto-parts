@@ -1,0 +1,11 @@
+.main-container {
+  flex-grow: 1;
+  padding: 0 20px;
+}
+
+.main {
+  &__title {
+    text-align: center;
+    padding: 20px 0;
+  }
+}

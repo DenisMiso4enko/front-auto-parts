@@ -15,22 +15,6 @@ const initialState: ProductInitialState = {
   markQuery: "",
 };
 
-export const fetchGetEditProduct = createAsyncThunk(
-  "product/fetchGetEditProduct",
-  async function (id: string, { dispatch }) {
-    try {
-      const response: Response = await httpRequest(
-        `${PATHDOMAIN}/admin/getOne/${id}`,
-        "GET"
-      );
-      const product = await response.json();
-      // dispatch(setEditProduct(product));
-    } catch (e) {
-      console.log(e.message());
-    }
-  }
-);
-
 export const fetchGetProducts = createAsyncThunk(
   "product/fetchGetProducts",
   async function (page: number, { dispatch }) {

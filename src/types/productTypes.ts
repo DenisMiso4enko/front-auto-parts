@@ -37,7 +37,34 @@ export interface IProduct {
 
 export interface IOptionsInitialState {
   autos: any;
-  options: any;
+  options: IOptions[] | null;
   status: string;
   errors: any;
+  partsCategory: any;
+}
+
+export interface IUserInitialState {
+  userId: string;
+  status: null | string;
+  error: any;
+}
+
+export interface IOptions {
+  _id: string;
+  years: [number];
+  fuel: ["бензин", "дизель"];
+  type: [string];
+  box: ["АКПП", "МКПП"];
+  bodyType: [string];
+  __v: number;
+}
+
+export interface IAutoPartsInitialState {
+  parts: any;
+  loading: boolean;
+  errors: any;
+  totalPages: number;
+  currentPage: number;
+  totalProducts: number;
+  limit: number;
 }

@@ -1,6 +1,5 @@
 .dashboard-container {
   flex-grow: 1;
-
   padding: 0 20px;
 }
 
@@ -26,4 +25,20 @@
 .css-1oj2twp-MuiPagination-root {
   padding: 20px 0;
   margin: 0 auto;
+}
+
+.tb-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.btn-delete, btn-edit {
+  font-size: 18px;
+  padding: unset;
+}
+
+.td-model {
+  font-weight: 700;
 }

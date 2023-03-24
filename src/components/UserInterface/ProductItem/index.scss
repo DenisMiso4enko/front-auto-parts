@@ -1,0 +1,21 @@
+.parts-list__item {
+  display: flex;
+  justify-content: space-between;
+
+  background: #F4F4F4;
+
+  padding: 40px;
+}
+
+.parts__info {
+  width: 60%;
+
+}
+
+.parts__photo {
+  width: 30%;
+  img {
+    width: 100%;
+    height: auto;
+  }
+}

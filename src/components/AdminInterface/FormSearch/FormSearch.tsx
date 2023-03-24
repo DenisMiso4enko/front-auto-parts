@@ -20,7 +20,7 @@ const FormSearch = () => {
     e.preventDefault();
     if (product.trim() === "") return;
     const params = {
-      page: currentPage,
+      page: 1,
       product,
       mark,
     };

@@ -18,13 +18,13 @@ export const Dashboard = () => {
     dispatch(fetchGetProducts(currentPage));
   }, [currentPage]);
 
-  if (!userId) return <h1>Авторизуйтесь!</h1>;
+  if (!userId) return <h1>Авторизуйтесь</h1>;
   return (
     <div className="dashboard-container">
       <div className="dashboard">
-        <Panel/>
+        <Panel />
         <div className="pagination">
-          <PaginationAdmin/>
+          <PaginationAdmin />
         </div>
       </div>
     </div>

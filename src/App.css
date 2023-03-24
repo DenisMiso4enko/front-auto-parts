@@ -10,3 +10,8 @@
     --purple-color: #2B2747;
     --green-color: #6FB062;
 }
+
+a {
+    text-decoration: none;
+    color: inherit;
+}

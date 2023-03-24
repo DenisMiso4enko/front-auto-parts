@@ -1,0 +1,22 @@
+.search-form-wrapper {
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 20%;
+  height: 500px;
+  background: #F4F4F4;
+}
+
+.search-form {
+  padding: 20px;
+  &__title {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+}
+
+.form-search-part {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}

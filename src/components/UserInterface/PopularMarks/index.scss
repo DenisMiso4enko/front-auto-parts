@@ -1,0 +1,19 @@
+.marks {
+  &-list {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    &__item {
+      width: 18%;
+      height: 150px;
+      img {
+        width: 150px;
+        height: auto;
+      }
+    }
+
+  }
+
+
+}

@@ -2,11 +2,7 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { AppDispatch, RootState } from "../../../store";
-import {
-  clearEditProduct,
-  fetchGetEditProduct,
-  fetchGetProducts,
-} from "../../../store/slices/productSlice";
+import { fetchGetProducts } from "../../../store/slices/productSlice";
 import FormSearch from "../../../components/AdminInterface/FormSearch/FormSearch";
 import { Table } from "react-bootstrap";
 import { IProduct } from "../../../types/productTypes";
@@ -59,50 +55,54 @@ export const Panel = () => {
         </div>
       </div>
 
-      <Table striped bordered hover>
-        <thead>
-          <tr>
-            {columns.map((el) => (
-              <th key={el.text}>{el.text}</th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {products.map((el: IProduct, i: number) => (
-            <tr key={el._id}>
-              <td>{i + 1}</td>
-              <td>
-                {el.mark} {el.model} <br />
-                {el.product}
-              </td>
-              <td>{el.description}</td>
-              <td>{el.article}</td>
-              <td>{el.year}</td>
-              <td>
-                {el.price} {el.currency}
-              </td>
-              <td>{dayjs(el?.createdAt).format("MM.D.YYYY")}</td>
-              <td>{el.views}</td>
-              <td>
-                <div className="tb-actions">
-                  <button
-                    className="btn"
-                    onClick={() => handlerEditProduct(el._id)}
-                  >
-                    <FaRegEdit />
-                  </button>
-                  <button
-                    className="btn btn-lg"
-                    onClick={() => handlerDeleteProduct(el._id)}
-                  >
-                    <MdDelete />
-                  </button>
-                </div>
-              </td>
+      <div className="table-responsive">
+        <Table striped bordered hover>
+          <thead>
+            <tr>
+              {columns.map((el) => (
+                <th key={el.text}>{el.text}</th>
+              ))}
             </tr>
-          ))}
-        </tbody>
-      </Table>
+          </thead>
+          <tbody>
+            {products.map((el: IProduct, i: number) => (
+              <tr key={el._id}>
+                <td>
+                  <span className="td-model">
+                    {el.mark} {el.model}
+                  </span>{" "}
+                  <br />
+                  {el.product}
+                </td>
+                <td>{el.description}</td>
+                <td>{el.article}</td>
+                <td>{el.year}</td>
+                <td>
+                  {el.price} {el.currency}
+                </td>
+                <td>{dayjs(el?.createdAt).format("MM.D.YYYY")}</td>
+                <td>{el.views}</td>
+                <td>
+                  <div className="tb-actions">
+                    <button
+                      className="btn btn-edit"
+                      onClick={() => handlerEditProduct(el._id)}
+                    >
+                      <FaRegEdit />
+                    </button>
+                    <button
+                      className="btn btn-lg btn-delete"
+                      onClick={() => handlerDeleteProduct(el._id)}
+                    >
+                      <MdDelete />
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      </div>
     </>
   );
 };

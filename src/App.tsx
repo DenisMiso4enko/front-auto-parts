@@ -9,6 +9,10 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "./store";
 import { fetchOptions } from "./store/slices/settingsSlice";
+import AutoParts from "./pages/AutoParts/AutoParts";
+import Guarantee from "./pages/Guarantee/Guarantee";
+import About from "./pages/About/About";
+import Delivery from "./pages/Delivery/Delivery";
 
 export default function App() {
   const dispatch = useDispatch<AppDispatch>();
@@ -22,6 +26,11 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<MainPage />} />
+            <Route path="/auto-parts" element={<AutoParts />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/guarantee" element={<Guarantee />} />
+            <Route path="/delivery" element={<Delivery />} />
+
             <Route path="/admin" element={<Login />} />
             <Route path="/admin/dashboard" element={<Dashboard />} />
             <Route
