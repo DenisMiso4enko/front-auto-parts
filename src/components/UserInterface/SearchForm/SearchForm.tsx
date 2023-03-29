@@ -1,8 +1,14 @@
 import React, { useState } from "react";
 import "./index.scss";
 import { Form } from "react-bootstrap";
-import { useSelector } from "react-redux";
-import { RootState } from "../../../store";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../../store";
+import {
+  fetchGetAllParts,
+  fetchSearch,
+  setCurrentPage,
+} from "../../../store/slices/autoPartsSlice";
+import { fetchGetProducts } from "../../../store/slices/productSlice";
 
 const SearchForm = () => {
   const { autos, options, partsCategory } = useSelector(
@@ -19,6 +25,8 @@ const SearchForm = () => {
   const marks = autos?.map((el) => el.mark);
   const years = options?.map((el) => el.years);
 
+  const dispatch = useDispatch<AppDispatch>();
+
   const handlerOnChangeMarks = (e: any) => {
     const mark = e.target.value;
     setMark(mark);
@@ -30,18 +38,28 @@ const SearchForm = () => {
     e.preventDefault();
     try {
       const formField = {
-        mark: modelVal,
+        mark: mark,
         model: modelVal,
         year: yearVal,
         product: productVal,
         article: articleVal,
         numberOfProduct: numberVal,
       };
-
-      console.log(formField);
+      dispatch(setCurrentPage(1));
+      dispatch(fetchSearch(formField));
     } catch (e) {
       console.log(e.message);
     }
+  };
+
+  const handlerClearSearch = () => {
+    setMark("");
+    setProductVal("");
+    setModelVal("");
+    setYearVal("");
+    setArticleVal("");
+    setNumberVal("");
+    dispatch(fetchGetAllParts());
   };
 
   return (
@@ -127,6 +145,20 @@ const SearchForm = () => {
         <button className="btn btn-success" type="submit">
           Найти
         </button>
+        {mark ||
+        productVal.trim() ||
+        modelVal ||
+        yearVal ||
+        articleVal.trim() ||
+        numberVal.trim() ? (
+          <button
+            className="btn btn-danger"
+            type="button"
+            onClick={handlerClearSearch}
+          >
+            Сбрость
+          </button>
+        ) : null}
       </form>
     </div>
   );

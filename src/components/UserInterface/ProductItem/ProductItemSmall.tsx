@@ -4,6 +4,7 @@ import dayjs from "dayjs";
 import { PATHDOMAIN } from "../../../constants";
 import "./index.scss";
 import noImage from "../../../assets/no-image-icon-6.png";
+import { NavLink } from "react-router-dom";
 
 const ProductItemSmall = ({
   _id,
@@ -22,7 +23,10 @@ const ProductItemSmall = ({
     <div className="parts-list__item">
       <div className="parts__info">
         <h4>
-          {product} к {model} {mark}, {year} г.
+          <NavLink to={`/auto-parts/${_id}`}>
+            {product} к {model} {mark}
+          </NavLink>
+          , {year} г.
         </h4>
         <p>{description}</p>
         <p>Артикул: {article}</p>

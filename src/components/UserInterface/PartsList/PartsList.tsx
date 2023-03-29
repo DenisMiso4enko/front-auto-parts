@@ -2,7 +2,10 @@ import React, { useEffect } from "react";
 import "./index.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../store";
-import { fetchGetAllParts } from "../../../store/slices/autoPartsSlice";
+import {
+  fetchGetAllParts,
+  setCurrentPage,
+} from "../../../store/slices/autoPartsSlice";
 import { PaginationClient } from "../ClientPagination/ClientPagination";
 import ProductItemSmall from "../ProductItem/ProductItemSmall";
 
@@ -12,11 +15,9 @@ const PartsList = () => {
     (state: RootState) => state.autoParts
   );
 
-  console.log("parts", parts);
-
   useEffect(() => {
     window.scrollTo(0, 0);
-    dispatch(fetchGetAllParts({ currentPage, limit }));
+    dispatch(fetchGetAllParts());
   }, [currentPage]);
 
   return (

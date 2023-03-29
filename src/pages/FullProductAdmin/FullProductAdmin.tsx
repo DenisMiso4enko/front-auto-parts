@@ -30,23 +30,23 @@ const FullProductAdmin = () => {
 
   return (
     <div className="dashboard-container">
-      {data && (
-        <div className="full-part">
-          <h1>
-            {data.mark} {data.model}
-          </h1>
-          <div className="full-part__images">
-            {images.map((el) => (
-              <img
-                className="full-part__image"
-                src={`http://localhost:8888${el}`}
-                alt="photo"
-              />
-            ))}
-          </div>
-          <p>{data.product}</p>
-        </div>
-      )}
+      {/*{data && (*/}
+      {/*  <div className="full-part">*/}
+      {/*    <h1>*/}
+      {/*      {data.mark} {data.model}*/}
+      {/*    </h1>*/}
+      {/*    <div className="full-part__images">*/}
+      {/*      {images.map((el) => (*/}
+      {/*        <img*/}
+      {/*          className="full-part__image"*/}
+      {/*          src={`http://localhost:8888${el}`}*/}
+      {/*          alt="photo"*/}
+      {/*        />*/}
+      {/*      ))}*/}
+      {/*    </div>*/}
+      {/*    <p>{data.product}</p>*/}
+      {/*  </div>*/}
+      {/*)}*/}
     </div>
   );
 };
