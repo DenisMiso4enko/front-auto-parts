@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../store";
 import { PaginationClient } from "../ClientPagination/ClientPagination";
 import ProductItemSmall from "../ProductItem/ProductItemSmall";
+import NoResult from "../NoResult/NoResult";
 
 const PartsList = () => {
   const { parts } = useSelector((state: RootState) => state.autoParts);
