@@ -24,7 +24,7 @@ export const fetchGetAllParts = createAsyncThunk(
         "GET"
       );
       const data = await res.json();
-
+      window.scrollTo(0, 0);
       dispatch(setAutoParts(data.results));
       dispatch(setTotalPages(data.totalPages));
       dispatch(setTotalProducts(data.totalProducts));

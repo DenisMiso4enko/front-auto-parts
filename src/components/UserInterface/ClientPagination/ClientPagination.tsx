@@ -1,8 +1,11 @@
 import { Pagination } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../store";
-import { setCurrentPage } from "../../../store/slices/autoPartsSlice";
+import {
+  fetchGetAllParts,
+  setCurrentPage,
+} from "../../../store/slices/autoPartsSlice";
 
 export const PaginationClient = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -15,7 +18,12 @@ export const PaginationClient = () => {
     value: number
   ) => {
     dispatch(setCurrentPage(value));
+    dispatch(fetchGetAllParts());
   };
+
+  useEffect(() => {
+    dispatch(fetchGetAllParts());
+  }, []);
 
   return (
     <Pagination
