@@ -1,11 +1,22 @@
+//.header-container{
+//  display: flex;
+//  align-items: center;
+//  justify-content: space-between;
+//}
+
 .header {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  //position: fixed;
+  //z-index: 100;
+  //top: 0;
+  //right: 0;
+  //left: 0;
   background-color: var(--purple-color);
   color: white;
   padding: 1rem 2rem;
-  margin-bottom: 1rem;
+
 
   &__logo {
     cursor: pointer;

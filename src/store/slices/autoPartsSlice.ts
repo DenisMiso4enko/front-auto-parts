@@ -14,9 +14,11 @@ const initialState: IAutoPartsInitialState = {
 };
 
 export const fetchGetAllParts = createAsyncThunk(
-  "options/fetchOptions",
-  async function ({ currentPage, limit }: any, { dispatch }) {
+  "parts/fetchOptions",
+  async function (_, { dispatch, getState }) {
     try {
+      // @ts-ignore
+      const { currentPage, limit } = getState().autoParts;
       const res: Response = await httpRequest(
         `${PATHDOMAIN}/getAllParts?page=${currentPage}&limit=${limit}`,
         "GET"
@@ -26,6 +28,30 @@ export const fetchGetAllParts = createAsyncThunk(
       dispatch(setAutoParts(data.results));
       dispatch(setTotalPages(data.totalPages));
       dispatch(setTotalProducts(data.totalProducts));
+    } catch (e) {
+      console.log(e.message);
+    }
+  }
+);
+
+export const fetchSearch = createAsyncThunk(
+  "parts/fetchSearch",
+  async function (
+    { mark, model, year, article, numberOfProduct, product }: any,
+    { dispatch, getState }
+  ) {
+    try {
+      // @ts-ignore
+      const { currentPage, limit } = getState().autoParts;
+      const res: Response = await httpRequest(
+        `${PATHDOMAIN}/search?page=${currentPage}&limit=${limit}&mark=${mark}&model=${model}&year=${year}&article=${article}&numberOfProduct=${numberOfProduct}&product=${product}`,
+        "GET"
+      );
+      const data = await res.json();
+      console.log(data);
+      dispatch(setAutoParts(data.results));
+      dispatch(setTotalPages(data.totalPages));
+      // dispatch(setTotalProducts(data.totalProducts));
     } catch (e) {
       console.log(e.message);
     }
@@ -58,6 +84,17 @@ export const autoPartsSlice = createSlice({
         state.errors = "";
       }),
       builder.addCase(fetchGetAllParts.rejected, (state, action) => {
+        state.loading = false;
+        state.errors = action.payload;
+      }),
+      builder.addCase(fetchSearch.pending, (state, action) => {
+        state.loading = true;
+      }),
+      builder.addCase(fetchSearch.fulfilled, (state, action) => {
+        state.loading = false;
+        state.errors = "";
+      }),
+      builder.addCase(fetchSearch.rejected, (state, action) => {
         state.loading = false;
         state.errors = action.payload;
       });

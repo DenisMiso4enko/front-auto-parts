@@ -19,3 +19,44 @@
     height: auto;
   }
 }
+
+
+.full-product {
+  background: #F4F4F4;
+  padding: 20px;
+  width: 76%;
+  &__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+  }
+
+  &__images {
+    width: 70%;
+    img {
+      width: 100%;
+    }
+
+  }
+
+  &__info {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+
+  }
+
+  &__text {
+
+  }
+
+
+  &__another {
+
+  }
+
+  &__desc {
+
+  }
+}

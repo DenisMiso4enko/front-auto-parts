@@ -13,6 +13,7 @@ import AutoParts from "./pages/AutoParts/AutoParts";
 import Guarantee from "./pages/Guarantee/Guarantee";
 import About from "./pages/About/About";
 import Delivery from "./pages/Delivery/Delivery";
+import FullProduct from "./pages/FullProduct/FullProduct";
 
 export default function App() {
   const dispatch = useDispatch<AppDispatch>();
@@ -27,6 +28,7 @@ export default function App() {
           <Route path="/" element={<Layout />}>
             <Route index element={<MainPage />} />
             <Route path="/auto-parts" element={<AutoParts />} />
+            <Route path="/auto-parts/:id" element={<FullProduct />} />
             <Route path="/about" element={<About />} />
             <Route path="/guarantee" element={<Guarantee />} />
             <Route path="/delivery" element={<Delivery />} />
