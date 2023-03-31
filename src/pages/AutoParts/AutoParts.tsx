@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import PartsCategory from "../../components/UserInterface/PartsCategory/PartsCategory";
 import "./index.scss";
 import SearchForm from "../../components/UserInterface/SearchForm/SearchForm";
 import PartsList from "../../components/UserInterface/PartsList/PartsList";
@@ -18,8 +17,6 @@ const AutoParts = () => {
         <h2>Запчасти</h2>
         <span>главная</span> - <span>запчасти</span>
       </div>
-
-      <PartsCategory />
       <div className="parts-wrapper">
         <SearchForm />
         <PartsList />
