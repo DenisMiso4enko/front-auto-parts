@@ -5,10 +5,10 @@ import "./index.scss";
 
 export const Layout = () => {
   return (
-    <div className="wrapper">
+    <>
       <Header />
       <Outlet />
       <Footer />
-    </div>
+    </>
   );
 };

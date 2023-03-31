@@ -4,7 +4,6 @@ import { MainPage } from "./pages/MainPage";
 import { Login } from "./components/AdminInterface/Login";
 import { Dashboard } from "./pages/Dashboard";
 import { FormCreate } from "./components/AdminInterface/FormCreate";
-import "./App.css";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "./store";
@@ -14,6 +13,7 @@ import Guarantee from "./pages/Guarantee/Guarantee";
 import About from "./pages/About/About";
 import Delivery from "./pages/Delivery/Delivery";
 import FullProduct from "./pages/FullProduct/FullProduct";
+import "./App.scss";
 
 export default function App() {
   const dispatch = useDispatch<AppDispatch>();

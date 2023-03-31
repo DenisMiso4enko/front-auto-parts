@@ -1,24 +1,37 @@
 import React from "react";
-import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { RootState } from "../../store";
+import { useLocation, useNavigate } from "react-router-dom";
 import { NavMenuAdmin } from "../AdminInterface/NavMenuAdmin";
 import { NavMenuUser } from "../UserInterface/NavMenuUser";
 import "./index.scss";
 
 export const Header = () => {
   const navigate = useNavigate();
-  const { userId } = useSelector((state: RootState) => state.user);
+  const locate = useLocation()
 
+  if (locate.pathname.includes('/admin')) {
   return (
-    <div className="header header-container">
-      <div
-        className="header__logo"
-        onClick={() => navigate(`${userId ? "admin/dashboard" : ""}`)}
-      >
-        AUTOGOMEL
+      <div className="header-admin">
+        <div className="wrapper">
+          <div className="header-admin__body">
+            <div className="header-admin__logo" onClick={() => navigate("admin/dashboard")}>
+              AUTOGOMEL
+            </div>
+            <NavMenuAdmin />
+          </div>
+        </div>
       </div>
-      {userId ? <NavMenuAdmin /> : <NavMenuUser />}
-    </div>
-  );
+    );
+  } else {
+    return (
+      <div className="header">
+        <div className="wrapper">
+          <div className="header__body">
+            <div className="header__logo"><span className="header__logo-red">AUTO</span>GOMEL</div>
+            <NavMenuUser />
+            <div className="header__tel"><a href="tel:+375298734927">+375 (00) 000-00-00</a></div>
+          </div>
+        </div>
+      </div>
+    )
+  }
 };

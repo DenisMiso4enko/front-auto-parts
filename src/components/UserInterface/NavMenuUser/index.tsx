@@ -1,26 +1,17 @@
 import React from "react";
 import "./index.scss";
 import { NavLink } from "react-router-dom";
+import { dataMenu } from "./data-menu";
 
 export const NavMenuUser = () => {
   return (
     <nav className="navmenu">
       <ul className="navmenu__list">
-        <li className="navmenu__item">
-          <NavLink to="/">Главная</NavLink>
+      {dataMenu.map(({title, nav}, index) => (
+        <li key={index} className="navmenu__item">
+          <NavLink to={nav}>{title}</NavLink>
         </li>
-        <li className="navmenu__item">
-          <NavLink to="/auto-parts">Запчасти</NavLink>
-        </li>
-        <li className="navmenu__item">
-          <NavLink to="/guarantee">Гарантия</NavLink>
-        </li>
-        <li className="navmenu__item">
-          <NavLink to="/delivery">Доставка</NavLink>
-        </li>
-        <li className="navmenu__item">
-          <NavLink to="/about">О нас</NavLink>
-        </li>
+      ))}
       </ul>
     </nav>
   );

@@ -14,8 +14,14 @@ ul {
     padding: 0 .5rem;
     cursor: pointer;
     .active  {
-      color: palevioletred;
+      color: tomato;
     }
+  }
+  a {
+    transition: color 0.15s ease-in-out;
+  }
+  a:hover {
+    color: rgb(255, 177, 163);
   }
 
 }
