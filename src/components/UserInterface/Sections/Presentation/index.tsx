@@ -1,9 +1,7 @@
 import React from 'react'
-import './index.scss'
+import '../../../../scss/components/_presentation.scss'
 
-type Props = {}
-
-export const Presentation = (props: Props) => {
+export const Presentation = () => {
   return (
     <section className='presentation'>
       <div className="wrapper">

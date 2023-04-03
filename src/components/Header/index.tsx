@@ -2,7 +2,7 @@ import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { NavMenuAdmin } from "../AdminInterface/NavMenuAdmin";
 import { NavMenuUser } from "../UserInterface/NavMenuUser";
-import "./index.scss";
+import "../../scss/components/_header.scss";
 
 export const Header = () => {
   const navigate = useNavigate();

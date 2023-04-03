@@ -1,0 +1,41 @@
+.presentation {
+  max-width: 100%;
+  margin: 0 auto;
+  background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
+    linear-gradient(180deg, #000000 0%, rgba(0, 0, 0, 0) 50%),
+    url(/black-ground.jpg);
+  color: #fff;
+
+  &__body {
+    padding: 4rem 0 8rem;
+  }
+  &__title {
+    max-width: 40rem;
+    margin-top: 2rem;
+    font-size: 3rem;
+    font-weight: 600;
+    line-height: 4rem;
+    color: #EBEFEE;
+  }
+  &__description {
+    max-width: 27rem;
+    margin-top: 2rem;
+    font-size: 1rem;
+    font-weight: 400;
+    color: #BDBDBD;
+  }
+  &__catalog {
+    margin-top: 2.5rem;
+    padding: .9rem 3.3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #FFFFFF;
+    border: none;
+    outline: none;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    line-height: 1.4rem;
+    font-weight: 500;
+  }
+}

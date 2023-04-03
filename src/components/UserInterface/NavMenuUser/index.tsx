@@ -1,7 +1,7 @@
 import React from "react";
-import "./index.scss";
 import { NavLink } from "react-router-dom";
 import { dataMenu } from "./data-menu";
+import "../../../scss/components/_navMenuUser.scss";
 
 export const NavMenuUser = () => {
   return (
